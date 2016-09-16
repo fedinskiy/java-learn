@@ -1,3 +1,5 @@
+package ru.stqa.pft.sandbox;
+
 import java.lang.*;
 import java.io.*;
 

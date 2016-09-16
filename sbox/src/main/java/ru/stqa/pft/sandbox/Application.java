@@ -1,3 +1,5 @@
+package ru.stqa.pft.sandbox;
+
 /**
  * Created by owlowl on 14.09.16.
  */
@@ -5,6 +7,8 @@ public class Application {
 	public static void main(String[] args)
 	{
 		Point first, second;
+		Square sq;
+		Rectangle rq;
 		
 		first=new Point(0);
 		second=new Point(-3,4);
@@ -12,6 +16,10 @@ public class Application {
 		System.out.println(first.distance(second));
 		System.out.println(second.distance(first));
 		
+		sq=new Square(2);
+		rq=new Rectangle(3,5);
+		System.out.println(sq.area());
+		System.out.println(rq.area());
 	}
 	public static double distance(Point p1, Point p2)
 	{
