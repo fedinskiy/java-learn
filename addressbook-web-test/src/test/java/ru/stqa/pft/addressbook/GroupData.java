@@ -4,6 +4,7 @@ public class  GroupData {
 	private final String name;
 	private final String header;
 	private final String footer;
+
 	
 	public GroupData(String name, String header, String footer) {
 		this.name = name;
@@ -22,4 +23,5 @@ public class  GroupData {
 	public String getFooter() {
 		return footer;
 	}
+
 }
