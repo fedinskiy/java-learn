@@ -10,11 +10,11 @@ public class ContactCreationTest extends AddressBookTest{
     
     @Test
     public void createContact() {
-        app.openGroups(ContactCreationTest.this);
-        app.initContact(ContactCreationTest.this);
-        app.fillContactForm(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.13.1992", "17.09.2001"), ContactCreationTest.this);
-        app.wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-        app.returnToContacts(ContactCreationTest.this);
+        app.getNavigation().openGroups();
+        app.getContactHelper().initContact();
+        app.getContactHelper().fillContactForm(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.13.1992", "17.09.2001"), ContactCreationTest.this);
+        app.getGroupHelper().wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+        app.getNavigation().returnToContacts();
     }
     
 }
