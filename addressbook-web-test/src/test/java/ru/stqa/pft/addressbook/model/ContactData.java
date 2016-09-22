@@ -1,4 +1,4 @@
-package ru.stqa.pft.addressbook;
+package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
 	private final String firstName;
@@ -47,7 +47,7 @@ public class ContactData {
 		return anniversary;
 	}
 	
-	class ThreePartDate
+	public class ThreePartDate
 	{
 		private int day;
 		private int month;
