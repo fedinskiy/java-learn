@@ -12,7 +12,10 @@ public class BaseHelper {
 	public BaseHelper(FirefoxDriver wd) {
 		this.wd=wd;
 	}
+	public void pressButtonByXPath(String xpath){
+		wd.findElement(By.xpath(xpath)).click();
+	}
 	public void pressButton(String name){
-		wd.findElement(By.xpath(name)).click();
+		wd.findElement(By.name(name)).click();
 	}
 }

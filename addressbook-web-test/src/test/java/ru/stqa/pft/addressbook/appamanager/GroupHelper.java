@@ -16,6 +16,12 @@ public class GroupHelper extends BaseHelper{
 		super(wd);
 	}
 	
+	public void openGroup() {
+		if (!wd.findElement(By.name("selected[]")).isSelected()) {
+			wd.findElement(By.name("selected[]")).click();
+		}
+		pressButton("edit");
+	}
 
 	public void returnToGroupPage() {
 		wd.findElement(By.linkText("group page")).click();
@@ -25,7 +31,7 @@ public class GroupHelper extends BaseHelper{
 		wd.findElement(By.name("submit")).click();
 	}
 	
-	public void fillGroupForm(GroupData groupData, AddressBookTest addressBookTest) {
+	public void fillGroupForm(GroupData groupData) {
 		setFieldValue("group_name",groupData.getName(), wd);
 		setFieldValue("group_header",groupData.getHeader(),wd);
 		setFieldValue("group_footer",groupData.getFooter(),wd);
@@ -33,5 +39,9 @@ public class GroupHelper extends BaseHelper{
 	
 	public void initGroup() {
 		wd.findElement(By.name("new")).click();
+	}
+	
+	public void saveChanges() {
+		this.pressButton("update");
 	}
 }
