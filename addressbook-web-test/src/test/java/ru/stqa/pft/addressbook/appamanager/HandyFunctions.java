@@ -9,9 +9,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class HandyFunctions {
 	public static void setFieldValue(String fieldName, String newValue, FirefoxDriver wd) {
-	    wd.findElement(By.name(fieldName)).click();
-	    wd.findElement(By.name(fieldName)).clear();
-	    wd.findElement(By.name(fieldName)).sendKeys(newValue);
+		setFieldValue(newValue, wd, By.name(fieldName));
+	}
+	public static void setFieldValue( String newValue, FirefoxDriver wd, By locator) {
+		wd.findElement(locator).click();
+		wd.findElement(locator).clear();
+		wd.findElement(locator).sendKeys(newValue);
 	}
 	
 	public static boolean isAlertPresent(FirefoxDriver wd) {
@@ -29,4 +32,6 @@ public class HandyFunctions {
 	        wd.findElement(By.xpath(expression)).click();
 	    }
 	}
+
+		
 }

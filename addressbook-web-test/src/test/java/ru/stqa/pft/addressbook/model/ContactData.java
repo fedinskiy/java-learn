@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.regex.Pattern;
+
 public class ContactData {
 	private final String firstName;
 	private final String lastName;
@@ -54,15 +56,15 @@ public class ContactData {
 		private String year;
 		
 		public ThreePartDate(String date ){
-			this (date.split("."));
+			this (date.split(Pattern.quote(".")));
 		}
 		private ThreePartDate(String[] parts){
-			this (Integer.getInteger(parts[0]),Integer.getInteger(parts[1]),parts[3]);
+			this(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]), parts[2]);
 		}
-		public ThreePartDate(int day, int month, String year){
-			this.day=day;
-			this.month=month;
-			this.year=year;
+		public ThreePartDate(int _day, int _month, String _year){
+			this.day=_day;
+			this.month=_month;
+			this.year=_year;
 		}
 		
 		

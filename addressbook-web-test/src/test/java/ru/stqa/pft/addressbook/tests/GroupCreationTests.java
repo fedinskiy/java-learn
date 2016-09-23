@@ -9,11 +9,11 @@ public class GroupCreationTests  extends AddressBookTest {
 
 	@Test
 	public void testGroupCreation() {
-		app.getNavigation().gotoGroupPage(GroupCreationTests.this);
-		app.getGroupHelper().initGroup(GroupCreationTests.this);
+		app.getNavigation().gotoGroupPage();
+		app.getGroupHelper().initGroup();
 		app.getGroupHelper().fillGroupForm(new GroupData("TestGroupName", "TestGroupHeader", "TestGroupFooter"), GroupCreationTests.this);
-		app.getGroupHelper().submitGroupCreation(GroupCreationTests.this);
-		app.getGroupHelper().returnToGroupPage(GroupCreationTests.this);
+		app.getGroupHelper().submitGroupCreation();
+		app.getGroupHelper().returnToGroupPage();
 	}
 	
 }

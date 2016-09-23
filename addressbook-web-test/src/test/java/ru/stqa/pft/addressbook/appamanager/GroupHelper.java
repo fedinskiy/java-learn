@@ -10,12 +10,10 @@ import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
 /**
  * Created by owlowl on 22.09.16.
  */
-public class GroupHelper {
-	
-	private final FirefoxDriver wd;
+public class GroupHelper extends BaseHelper{
 	
 	public GroupHelper(FirefoxDriver wd) {
-		this.wd=wd;	
+		super(wd);
 	}
 	
 

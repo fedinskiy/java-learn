@@ -8,12 +8,10 @@ import ru.stqa.pft.addressbook.tests.AddressBookTest;
 /**
  * Created by owlowl on 22.09.16.
  */
-public class ContactHelper {
-	
-	private final FirefoxDriver wd;
+public class ContactHelper extends BaseHelper {
 	
 	public ContactHelper(FirefoxDriver wd) {
-		this.wd=wd;
+		super(wd);
 	}
 	
 	public void fillContactForm(ContactData contactData, AddressBookTest addressBookTest) {
