@@ -9,11 +9,11 @@ public class ContactCreationTest extends AddressBookTest{
     
     @Test
     public void createContact() {
-        app.getNavigation().openGroups();
+        app.getNavigation().openContacts();
         app.getContactHelper().initContact();
-        app.getContactHelper().fillContactForm(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001"), ContactCreationTest.this);
+        app.getContactHelper().fillContactForm(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001"));
         app.getGroupHelper().pressButtonByXPath("//div[@id='content']/form/input[21]");
-        app.getNavigation().returnToContacts();
+        app.getNavigation().openContacts();
     }
     
 }

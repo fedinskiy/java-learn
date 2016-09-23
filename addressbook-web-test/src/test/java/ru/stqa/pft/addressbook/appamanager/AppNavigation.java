@@ -19,11 +19,7 @@ public class AppNavigation {
 		wd.findElement(By.linkText("groups")).click();
 	}
 	
-	public void returnToContacts() {
+	public void openContacts() {
 		wd.findElement(By.linkText("home")).click();
-	}
-	
-	public void openGroups() {
-		wd.get("http://localhost/addressbook/group.php");
 	}
 }

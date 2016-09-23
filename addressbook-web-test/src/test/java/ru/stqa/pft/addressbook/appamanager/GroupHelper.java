@@ -17,12 +17,14 @@ public class GroupHelper extends BaseHelper{
 	}
 	
 	public void openGroup() {
-		if (!wd.findElement(By.name("selected[]")).isSelected()) {
-			wd.findElement(By.name("selected[]")).click();
-		}
+		selectGroup();
 		pressButton("edit");
 	}
-
+	
+	public void selectGroup() {
+		selectElement();
+	}
+	
 	public void returnToGroupPage() {
 		wd.findElement(By.linkText("group page")).click();
 	}
@@ -43,5 +45,10 @@ public class GroupHelper extends BaseHelper{
 	
 	public void saveChanges() {
 		this.pressButton("update");
+	}
+	
+	
+	public void deleteChosenGroups() {
+		this.pressButton("delete");
 	}
 }
