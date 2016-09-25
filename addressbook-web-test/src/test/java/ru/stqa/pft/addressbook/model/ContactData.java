@@ -10,8 +10,9 @@ public class ContactData {
 	private final String email;
 	private final ThreePartDate birth;
 	private final ThreePartDate anniversary;
+	private String group;
 	
-	public ContactData(String firstName, String lastName, String address, String mobilePhone, String email, String birth, String anniversary) {
+	public ContactData(String firstName, String lastName, String address, String mobilePhone, String email, String birth, String anniversary, String group) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -19,6 +20,7 @@ public class ContactData {
 		this.email = email;
 		this.birth = new ThreePartDate(birth);
 		this.anniversary =  new ThreePartDate(anniversary);
+		this.group = group;
 	}
 	
 	public String getFirstName() {
@@ -47,6 +49,10 @@ public class ContactData {
 	
 	public ThreePartDate getAnniversary() {
 		return anniversary;
+	}
+	
+	public String getGroup() {
+		return group;
 	}
 	
 	public class ThreePartDate
