@@ -11,7 +11,7 @@ public class GroupCreationTests  extends AddressBookTest {
 	public void testGroupCreation() {
 		app.getNavigation().gotoGroupPage();
 		app.getGroupHelper().initGroup();
-		app.getGroupHelper().fillGroupForm(new GroupData("TestGroupName", "TestGroupHeader", "TestGroupFooter"));
+		app.getGroupHelper().fillGroupForm(new GroupData("TestGroupName", null, null));
 		app.getGroupHelper().submitGroupCreation();
 		app.getGroupHelper().returnToGroupPage();
 	}
