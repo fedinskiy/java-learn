@@ -10,8 +10,11 @@ public class ContactModificationTest extends AddressBookTest{
 	@Test
 	public void modifyContact(){
 		app.getNavigation().openContacts();
-		//app.getContactHelper().selectElement();
-		app.getContactHelper().editContact(4);
+		if(!app.getContactHelper().isAnyContactsThere()){
+			app.getContactHelper().createContact(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001","TestGroupName"));
+			app.getNavigation().openContacts();
+		}
+		app.getContactHelper().editContact(1);
 		app.getContactHelper().fillContactForm(new ContactData("Fname", "LName", "addr", "222", "email@test.net", "11.12.1992", "17.10.2001", null), false);
 		app.getContactHelper().saveContact();
 	}

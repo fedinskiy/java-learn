@@ -45,8 +45,12 @@ public class HandyFunctions {
 	}
 	
 	public static void chooseInSelector(RemoteWebDriver wd, String selectorName, String value) {
-		if (isElementPresent(wd, By.name(selectorName))) {
-			new Select(wd.findElement(By.name(selectorName))).selectByVisibleText(value);
+		try {
+			if (isElementPresent(wd, By.name(selectorName))) {
+				new Select(wd.findElement(By.name(selectorName))).selectByVisibleText(value);
+			}
+		}catch (NoSuchElementException ex){
+			System.out.println("Не удалось выбрать группу.");
 		}
 	}
 	
