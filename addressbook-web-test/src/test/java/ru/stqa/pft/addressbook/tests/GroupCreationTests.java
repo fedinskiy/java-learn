@@ -10,10 +10,7 @@ public class GroupCreationTests  extends AddressBookTest {
 	@Test
 	public void testGroupCreation() {
 		app.getNavigation().gotoGroupPage();
-		app.getGroupHelper().initGroup();
-		app.getGroupHelper().fillGroupForm(new GroupData("TestGroupName", null, null));
-		app.getGroupHelper().submitGroupCreation();
-		app.getGroupHelper().returnToGroupPage();
+		app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
 	}
 	
 }

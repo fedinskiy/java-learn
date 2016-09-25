@@ -8,10 +8,13 @@ import ru.stqa.pft.addressbook.model.GroupData;
  */
 public class GroupModificationTest extends AddressBookTest {
 	@Test
-	public void testGroupModification(){
+	public void testGroupModification() {
 		app.getNavigation().gotoGroupPage();
+		if (!app.getGroupHelper().isGroupThere()) {
+			app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
+		}
 		app.getGroupHelper().openGroup();
-		app.getGroupHelper().fillGroupForm(new GroupData("t1","t2","t3"));
+		app.getGroupHelper().fillGroupForm(new GroupData("t1", "t2", "t3"));
 		app.getGroupHelper().saveChanges();
 		app.getGroupHelper().returnToGroupPage();
 	}
