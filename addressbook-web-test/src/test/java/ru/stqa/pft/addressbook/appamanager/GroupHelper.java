@@ -1,9 +1,8 @@
 package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.tests.AddressBookTest;
 
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
 
@@ -12,7 +11,7 @@ import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
  */
 public class GroupHelper extends BaseHelper{
 	
-	public GroupHelper(FirefoxDriver wd) {
+	public GroupHelper(RemoteWebDriver wd) {
 		super(wd);
 	}
 	

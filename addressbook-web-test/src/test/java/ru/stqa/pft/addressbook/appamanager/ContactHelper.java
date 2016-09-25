@@ -2,15 +2,15 @@ package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.tests.AddressBookTest;
 
 /**
  * Created by owlowl on 22.09.16.
  */
 public class ContactHelper extends BaseHelper {
 	
-	public ContactHelper(FirefoxDriver wd) {
+	public ContactHelper(RemoteWebDriver wd) {
 		super(wd);
 	}
 	

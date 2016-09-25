@@ -2,14 +2,15 @@ package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * Created by owlowl on 23.09.16.
  */
 public class BaseHelper {
-	protected final FirefoxDriver wd;
+	protected final RemoteWebDriver wd;
 	
-	public BaseHelper(FirefoxDriver wd) {
+	public BaseHelper(RemoteWebDriver wd) {
 		this.wd=wd;
 	}
 	public void pressButtonByXPath(String xpath){

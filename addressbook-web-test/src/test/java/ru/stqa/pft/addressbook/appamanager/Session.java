@@ -2,14 +2,15 @@ package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * Created by owlowl on 23.09.16.
  */
 public class Session {
-	FirefoxDriver wd;
+	RemoteWebDriver wd;
 	
-	public Session(FirefoxDriver wd) {
+	public Session(RemoteWebDriver wd) {
 	this.wd=wd;
 	}
 	public void login(String username, String password) {
