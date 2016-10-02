@@ -52,7 +52,7 @@ public class GroupHelper extends BaseHelper {
 	}
 	
 	public boolean isGroupThere() {
-		return HandyFunctions.isElementPresent(wd,By.name("selected"));
+		return HandyFunctions.isElementPresent(wd,By.name("selected[]"));
 	}
 	
 	public void createGroup(GroupData groupData) {
@@ -63,4 +63,7 @@ public class GroupHelper extends BaseHelper {
 	}
 	
 	
+	public int getGroupCount() {
+		return wd.findElements(By.name("selected[]" )).size();
+	}
 }
