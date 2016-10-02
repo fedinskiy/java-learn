@@ -58,6 +58,10 @@ public class ContactHelper extends BaseHelper {
 		selectElement();
 	}
 	
+	public void chooseContact(int i) {
+		selectElement(i);
+	}
+	
 	public void pressDeleteButton() {
 		pressButtonByXPath("//div[@id='content']/form[2]/div[2]/input");
 	}

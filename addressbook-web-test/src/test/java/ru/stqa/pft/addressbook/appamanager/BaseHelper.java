@@ -1,8 +1,11 @@
 package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.util.List;
 
 /**
  * Created by owlowl on 23.09.16.
@@ -21,8 +24,12 @@ public class BaseHelper {
 	}
 	
 	public void selectElement() {
-		if (!wd.findElement(By.name("selected[]")).isSelected()) {
-			wd.findElement(By.name("selected[]")).click();
+		selectElement(0);
+	}
+	public void selectElement(int i) {
+		WebElement selector= wd.findElements(By.name("selected[]")).get(i);
+		if (!selector.isSelected()) {
+			selector.click();
 		}
 	}
 	public void acceptDialog(){

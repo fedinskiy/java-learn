@@ -66,4 +66,8 @@ public class GroupHelper extends BaseHelper {
 	public int getGroupCount() {
 		return wd.findElements(By.name("selected[]" )).size();
 	}
+	
+	public void selectGroup(int i) {
+		selectElement(i);
+	}
 }

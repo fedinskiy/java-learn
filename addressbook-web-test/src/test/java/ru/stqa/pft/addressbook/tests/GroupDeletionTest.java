@@ -16,7 +16,7 @@ public class GroupDeletionTest extends AddressBookTest  {
 		if(!app.getGroupHelper().isGroupThere()){
 			app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
 		}
-		app.getGroupHelper().selectGroup();
+		app.getGroupHelper().selectGroup(groupCountBefore - 1);
 		app.getGroupHelper().deleteChosenGroups();
 		app.getGroupHelper().returnToGroupPage();
 		int groupCountAfter=app.getGroupHelper().getGroupCount();
