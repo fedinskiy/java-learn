@@ -13,15 +13,20 @@ public class GroupDeletionTest extends AddressBookTest  {
 	@Test
 	public void deleteGroup()
 	{
+		int deletedIndex;
 		app.getNavigation().gotoGroupPage();
 		if(!app.getGroupHelper().isGroupThere()){
 			app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
 		}
 		List<GroupData> before = app.getGroupHelper().getGroupList();
-		app.getGroupHelper().selectGroup(before.size() - 1);
+		deletedIndex=before.size() - 1;
+		app.getGroupHelper().selectGroup(deletedIndex);
 		app.getGroupHelper().deleteChosenGroups();
 		app.getGroupHelper().returnToGroupPage();
 		List<GroupData> after = app.getGroupHelper().getGroupList();
 		Assert.assertEquals(after.size(), before.size()-1);
+		before.remove(deletedIndex);
+		
+		Assert.assertEquals(before,after);
 	}
 }
