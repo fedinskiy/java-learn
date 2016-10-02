@@ -1,8 +1,12 @@
 package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
 
@@ -69,5 +73,17 @@ public class GroupHelper extends BaseHelper {
 	
 	public void selectGroup(int i) {
 		selectElement(i);
+	}
+	
+	public List<GroupData> getGroupList() {
+		List<GroupData> groups=new ArrayList<GroupData>();
+		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
+		for(WebElement we:pageElements){
+			String name=we.getText();
+			GroupData group= new GroupData(name,null, null);
+			groups.add(group);
+		}
+		return groups;
+		
 	}
 }

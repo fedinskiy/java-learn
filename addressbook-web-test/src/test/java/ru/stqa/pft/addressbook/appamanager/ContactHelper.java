@@ -1,8 +1,13 @@
 package ru.stqa.pft.addressbook.appamanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by owlowl on 22.09.16.
@@ -78,5 +83,16 @@ public class ContactHelper extends BaseHelper {
 		String pageCounterValue = wd.findElement(By.id("search_count")).getText();
 		int numberOfElements=(pageCounterValue.isEmpty())?0:Integer.parseInt(pageCounterValue);
 		return numberOfElements>0;
+	}
+	
+	public List<ContactData> getContactList() {
+		List<ContactData> contacts=new ArrayList<ContactData>();
+		List<WebElement> pageElements=	wd.findElements(By.name("entry" ));
+		for(WebElement we:pageElements){
+			String name=we.getText();
+			ContactData contact= new ContactData(name,null, null,null,null,null,null,null);
+			contacts.add(contact);
+		}
+		return contacts;
 	}
 }

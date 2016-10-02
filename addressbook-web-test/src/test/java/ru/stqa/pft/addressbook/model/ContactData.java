@@ -18,8 +18,17 @@ public class ContactData {
 		this.address = address;
 		this.mobilePhone = mobilePhone;
 		this.email = email;
-		this.birth = new ThreePartDate(birth);
-		this.anniversary =  new ThreePartDate(anniversary);
+		if (null!=birth) {
+			this.birth = new ThreePartDate(birth);
+		}else{
+			this.birth = new ThreePartDate();
+		}
+		if (null!=anniversary) {
+			this.anniversary =  new ThreePartDate(anniversary);
+		}else{
+			this.anniversary = new ThreePartDate();
+		}
+
 		this.group = group;
 	}
 	
@@ -61,8 +70,13 @@ public class ContactData {
 		private int month;
 		private String year;
 		
+		public ThreePartDate(){
+			this.day=0;
+			this.month=0;
+			this.year="";
+		}
 		public ThreePartDate(String date ){
-			this (date.split(Pattern.quote(".")));
+			this(date.split(Pattern.quote(".")));
 		}
 		private ThreePartDate(String[] parts){
 			this(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]), parts[2]);
