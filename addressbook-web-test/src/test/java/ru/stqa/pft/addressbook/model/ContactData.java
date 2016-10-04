@@ -11,7 +11,8 @@ public class ContactData {
 	private final ThreePartDate birth;
 	private final ThreePartDate anniversary;
 	private String group;
-	
+	private int id;
+	private final int DEFAULT_ID=Integer.MAX_VALUE;
 	public ContactData(String firstName, String lastName, String address, String mobilePhone, String email, String birth, String anniversary, String group) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -28,7 +29,7 @@ public class ContactData {
 		}else{
 			this.anniversary = new ThreePartDate();
 		}
-
+		this.id=DEFAULT_ID;
 		this.group = group;
 	}
 	
@@ -62,6 +63,42 @@ public class ContactData {
 	
 	public String getGroup() {
 		return group;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setId(String id) {
+		this.id = Integer.parseInt(id);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		
+		ContactData that = (ContactData) o;
+		
+		return id == that.id ||id==DEFAULT_ID||that.id==DEFAULT_ID;
+		
+	}
+	
+	@Override
+	public int hashCode() {
+		return id;
+	}
+	
+	@Override
+	public String toString() {
+		return "ContactData{" +
+				"firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", id=" + id +
+				'}';
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public class ThreePartDate
@@ -100,4 +137,5 @@ public class ContactData {
 			return year;
 		}
 	}
+	
 }

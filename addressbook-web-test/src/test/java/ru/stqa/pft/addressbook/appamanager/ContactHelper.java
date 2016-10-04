@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appamanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
@@ -86,11 +87,18 @@ public class ContactHelper extends BaseHelper {
 	}
 	
 	public List<ContactData> getContactList() {
+		final int NAME_COLUMN_NUMBER=2;
+		final int LAST_NAME_COLUMN_NUMBER=1;
 		List<ContactData> contacts=new ArrayList<ContactData>();
 		List<WebElement> pageElements=	wd.findElements(By.name("entry" ));
 		for(WebElement we:pageElements){
-			String name=we.getText();
-			ContactData contact= new ContactData(name,null, null,null,null,null,null,null);
+			String name=we.findElements(By.tagName("td")).get(NAME_COLUMN_NUMBER).getText();
+			String lastName=we.findElements(By.tagName("td")).get(LAST_NAME_COLUMN_NUMBER).getText();
+			String id =we.findElement(By.className("center")).findElement(By.name("selected[]")).getAttribute("id");
+			Assert.assertNotNull(id);
+			Assert.assertNotEquals(id,"","Пустое поле id");
+			ContactData contact= new ContactData(name,lastName, null,null,null,null,null,null);
+			contact.setId(id);
 			contacts.add(contact);
 		}
 		return contacts;
