@@ -14,7 +14,6 @@ public class ContactCreationTest extends AddressBookTest {
 	public void createContact() {
 		ContactData newContact = new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001", "TestGroupName");
 		
-		Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
 		app.getNavigation().openContacts();
 		List<ContactData> before = app.getContactHelper().getContactList();
 		app.getContactHelper().createContact(newContact);
@@ -25,8 +24,8 @@ public class ContactCreationTest extends AddressBookTest {
 
 		before.add(newContact);
 		
-		before.sort(byId);
-		after.sort(byId);
+		before.sort(app.getContactHelper().getComparator());
+		after.sort(app.getContactHelper().getComparator());
 		Assert.assertEquals(after, before);
 	}
 	

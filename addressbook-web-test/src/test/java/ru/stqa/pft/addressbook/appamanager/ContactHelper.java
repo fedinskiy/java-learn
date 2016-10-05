@@ -5,20 +5,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by owlowl on 22.09.16.
  */
 public class ContactHelper extends BaseHelper {
+
+	
+	private static final Comparator<ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
 	
 	public ContactHelper(RemoteWebDriver wd) {
 		super(wd);
 	}
-	
+	public Comparator<ContactData> getComparator() {
+		return byId;
+	}
 	public void fillContactForm(ContactData contactData, boolean creation) {
 		HandyFunctions.setFieldValue("firstname", contactData.getFirstName(), wd);
 		HandyFunctions.setFieldValue("lastname", contactData.getLastName(), wd);

@@ -24,12 +24,11 @@ public class GroupCreationTests extends AddressBookTest {
 		List<GroupData> after = app.getGroupHelper().getGroupList();
 		
 		Assert.assertEquals(after.size(), before.size() + 1);
-		Comparator<? super GroupData> byId= (g1,g2)-> Integer.compare(g1.getIdNumber(), g2.getIdNumber());
-		newGroup.setId(after.stream().max(byId).get().getIdNumber());
+		newGroup.setId(after.stream().max(app.getGroupHelper().getComparator()).get().getIdNumber());
 		before.add(newGroup);
 	
-		before.sort(byId);
-		after.sort(byId);
+		before.sort(app.getGroupHelper().getComparator());
+		after.sort(app.getGroupHelper().getComparator());
 		Assert.assertEquals(after,before);
 	}
 	

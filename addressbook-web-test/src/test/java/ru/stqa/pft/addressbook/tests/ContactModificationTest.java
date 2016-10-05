@@ -14,7 +14,6 @@ import java.util.List;
 public class ContactModificationTest extends AddressBookTest{
 	@Test
 	public void modifyContact(){
-		Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
 		app.getNavigation().openContacts();
 		if(!app.getContactHelper().isAnyContactsThere()){
 			app.getContactHelper().createContact(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001","TestGroupName"));
@@ -34,8 +33,8 @@ public class ContactModificationTest extends AddressBookTest{
 		before.remove(modifiedIndex);
 		
 		before.add(modified);
-		before.sort(byId);
-		after.sort(byId);
+		before.sort(app.getContactHelper().getComparator());
+		after.sort(app.getContactHelper().getComparator());
 		Assert.assertEquals(after, before);
 	}
 }

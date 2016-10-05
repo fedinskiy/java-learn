@@ -31,11 +31,10 @@ public class GroupModificationTest extends AddressBookTest {
 		app.getGroupHelper().returnToGroupPage();
 		List<GroupData> after = app.getGroupHelper().getGroupList();
 		Assert.assertEquals(after.size(), before.size());
-		Comparator<? super GroupData> byId= (g1, g2)-> Integer.compare(g1.getIdNumber(), g2.getIdNumber());
 		before.remove(modifiedIndex);
 		before.add(modified);
-		before.sort(byId);
-		after.sort(byId);
+		before.sort(app.getGroupHelper().getComparator());
+		after.sort(app.getGroupHelper().getComparator());
 		Assert.assertEquals(after, before);
 	}
 }

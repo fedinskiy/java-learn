@@ -3,9 +3,11 @@ package ru.stqa.pft.addressbook.appamanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
@@ -14,6 +16,11 @@ import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
  * Created by owlowl on 22.09.16.
  */
 public class GroupHelper extends BaseHelper {
+
+	private static final Comparator<? super GroupData> byId= (g1, g2)-> Integer.compare(g1.getIdNumber(), g2.getIdNumber());
+	public Comparator<? super GroupData> getComparator() {
+		return byId;
+	}
 	
 	public GroupHelper(RemoteWebDriver wd) {
 		super(wd);
