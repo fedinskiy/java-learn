@@ -53,7 +53,7 @@ public class ContactHelper extends BaseHelper {
 	}
 	
 	public void editContact(int n) {
-		this.pressButtonByXPath("//table[@id='maintable']/tbody/tr[" + String.valueOf(n+1) + "]/td[8]/a/img");
+		this.pressButtonByXPath("//table[@id='maintable']/tbody/tr[" + String.valueOf(n+2) + "]/td[8]/a/img");
 	}
 	
 	public void saveContact() {
