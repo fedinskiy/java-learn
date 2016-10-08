@@ -93,4 +93,10 @@ public class GroupHelper extends BaseHelper {
 		return groups;
 		
 	}
+	public void modifyGroup(int modifiedIndex, GroupData modified) {
+		selectGroup(modifiedIndex);
+		openGroup();
+		fillGroupForm(modified);
+		saveChanges();
+	}
 }
