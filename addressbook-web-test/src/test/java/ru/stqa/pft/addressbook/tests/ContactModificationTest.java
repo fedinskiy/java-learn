@@ -12,7 +12,7 @@ import java.util.List;
  * Created by owlowl on 24.09.16.
  */
 public class ContactModificationTest extends AddressBookTest{
-	@Test
+	@Test(enabled = false)
 	public void modifyContact(){
 		app.getNavigation().openContacts();
 		if(!app.getContactHelper().isAnyContactsThere()){

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ContactDeletionTest extends AddressBookTest{
 	
-		@Test
+		@Test(enabled = false)
 	public void deleteContactFromTable(){
 		app.getNavigation().openContacts();
 			if (!app.getContactHelper().isAnyContactsThere()) {

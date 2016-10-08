@@ -10,7 +10,7 @@ import java.util.List;
  * Created by owlowl on 23.09.16.
  */
 public class GroupDeletionTest extends AddressBookTest  {
-	@Test
+	@Test(enabled = false)
 	public void deleteGroup()
 	{
 		int deletedIndex;
