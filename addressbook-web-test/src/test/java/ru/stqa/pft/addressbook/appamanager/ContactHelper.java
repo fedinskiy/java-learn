@@ -83,7 +83,7 @@ public class ContactHelper extends BaseHelper {
 		fillContactForm(contactData, true);
 		pressButtonByXPath("//div[@id='content']/form/input[21]");
 		
-	}`
+	}
 	
 	public List<ContactData> getList() {
 		final int NAME_COLUMN_NUMBER=2;
