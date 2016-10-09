@@ -15,7 +15,7 @@ public class GroupModificationTest extends AddressBookTest {
 	public void ensurePreconditions(){
 		app.moveTo().groupsPage();
 		if (app.groups().getList().size()==0) {
-			app.groups().create(new GroupData("TestGroupName", null, null));
+			app.groups().create(new GroupData().withId("TestGroupName"));
 		}
 	}
 	 
@@ -28,7 +28,7 @@ public class GroupModificationTest extends AddressBookTest {
 		List<GroupData> before = app.groups().getList();
 		modifiedIndex=before.size()-1;
 		
-		modified=new GroupData(before.get(modifiedIndex).getId(), "t1", "t2", "t3");
+		modified=new GroupData().withName("t1").withHeader("t2").withFooter("t3").withId(before.get(modifiedIndex).getId());
 		
 		app.groups().modify(modifiedIndex, modified);
 		

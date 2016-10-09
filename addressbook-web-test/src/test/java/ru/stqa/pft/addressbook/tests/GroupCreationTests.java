@@ -16,13 +16,13 @@ public class GroupCreationTests extends AddressBookTest {
 
 		app.moveTo().groupsPage();
 		List<GroupData> before = app.groups().getList();
-		newGroup = new GroupData("TestGroupNameLambda", null, null);
+		newGroup = new GroupData().withName("TestGroupNameLambda");
 		app.groups().create(newGroup);
 		app.moveTo().groupsPage();
 		List<GroupData> after = app.groups().getList();
 		
 		Assert.assertEquals(after.size(), before.size() + 1);
-		newGroup.setId(after.stream().max(app.groups().getComparator()).get().getIdNumber());
+		newGroup.withId(after.stream().max(app.groups().getComparator()).get().getIdNumber());
 		before.add(newGroup);
 	
 		before.sort(app.groups().getComparator());

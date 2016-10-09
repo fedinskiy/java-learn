@@ -16,7 +16,7 @@ public class GroupDeletionTest extends AddressBookTest  {
 	public void ensurePreconditions(){
 		app.moveTo().groupsPage();
 		if (app.groups().getList().size()==0) {
-			app.groups().create(new GroupData("TestGroupName", null, null));
+			app.groups().create(new GroupData().withId("TestGroupName"));
 		}
 	}
 	
@@ -24,10 +24,7 @@ public class GroupDeletionTest extends AddressBookTest  {
 	public void deleteGroup()
 	{
 		int deletedIndex;
-		app.moveTo().groupsPage();
-		if(app.groups().getList().size()==0){
-			app.groups().create(new GroupData("TestGroupName", null, null));
-		}
+		ensurePreconditions();
 		List<GroupData> before = app.groups().getList();
 		deletedIndex=before.size() - 1;
 		
