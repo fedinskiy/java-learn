@@ -17,7 +17,7 @@ public class AppNavigation {
 		this.wd = wd;
 	}
 	
-	public void gotoGroupPage() {
+	public void groupsPage() {
 		if (isElementPresent(wd, By.tagName("h1"))
 				&& wd.findElement(By.tagName("h1")).getText().equals("Groups")
 				&& isElementPresent(wd, By.name("new"))) {
@@ -28,7 +28,7 @@ public class AppNavigation {
 	
 
 	
-	public void openContacts() {
+	public void contactsPage() {
 		if (!isElementPresent(wd, By.id("maintable"))) {
 			HandyFunctions.click("home", wd);
 		}

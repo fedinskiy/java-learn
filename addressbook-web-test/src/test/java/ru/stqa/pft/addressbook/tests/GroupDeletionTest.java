@@ -14,9 +14,9 @@ public class GroupDeletionTest extends AddressBookTest  {
 	
 	@BeforeMethod
 	public void ensurePreconditions(){
-		app.getNavigation().gotoGroupPage();
-		if (!app.getGroupHelper().isGroupThere()) {
-			app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
+		app.moveTo().groupsPage();
+		if (app.groups().getList().size()==0) {
+			app.groups().create(new GroupData("TestGroupName", null, null));
 		}
 	}
 	
@@ -24,19 +24,21 @@ public class GroupDeletionTest extends AddressBookTest  {
 	public void deleteGroup()
 	{
 		int deletedIndex;
-		app.getNavigation().gotoGroupPage();
-		if(!app.getGroupHelper().isGroupThere()){
-			app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
+		app.moveTo().groupsPage();
+		if(app.groups().getList().size()==0){
+			app.groups().create(new GroupData("TestGroupName", null, null));
 		}
-		List<GroupData> before = app.getGroupHelper().getGroupList();
+		List<GroupData> before = app.groups().getList();
 		deletedIndex=before.size() - 1;
-		app.getGroupHelper().selectGroup(deletedIndex);
-		app.getGroupHelper().deleteChosenGroups();
-		app.getGroupHelper().returnToGroupPage();
-		List<GroupData> after = app.getGroupHelper().getGroupList();
+		
+		app.groups().delete(deletedIndex);
+	
+			List<GroupData> after = app.groups().getList();
 		Assert.assertEquals(after.size(), before.size()-1);
 		before.remove(deletedIndex);
 		
 		Assert.assertEquals(before,after);
 	}
+	
+
 }

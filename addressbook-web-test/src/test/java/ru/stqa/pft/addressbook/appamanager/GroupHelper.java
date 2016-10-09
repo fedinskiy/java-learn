@@ -3,7 +3,6 @@ package ru.stqa.pft.addressbook.appamanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class GroupHelper extends BaseHelper {
 		pressButton("edit");
 	}
 	
-	public void selectGroup() {
+	public void select() {
 		selectElement();
 	}
 	
@@ -42,13 +41,13 @@ public class GroupHelper extends BaseHelper {
 		wd.findElement(By.name("submit")).click();
 	}
 	
-	public void fillGroupForm(GroupData groupData) {
+	public void fillForm(GroupData groupData) {
 		setFieldValue("group_name", groupData.getName(), wd);
 		setFieldValue("group_header", groupData.getHeader(), wd);
 		setFieldValue("group_footer", groupData.getFooter(), wd);
 	}
 	
-	public void initGroup() {
+	public void init() {
 		wd.findElement(By.name("new")).click();
 	}
 	
@@ -57,31 +56,28 @@ public class GroupHelper extends BaseHelper {
 	}
 	
 	
-	public void deleteChosenGroups() {
+	public void deleteChosen() {
 		this.pressButton("delete");
 	}
 	
-	public boolean isGroupThere() {
-		return HandyFunctions.isElementPresent(wd,By.name("selected[]"));
-	}
-	
-	public void createGroup(GroupData groupData) {
-		initGroup();
-		fillGroupForm(groupData);
+
+	public void create(GroupData groupData) {
+		init();
+		fillForm(groupData);
 		submitGroupCreation();
 		returnToGroupPage();
 	}
 	
 	
-	public int getGroupCount() {
+	public int getCount() {
 		return wd.findElements(By.name("selected[]" )).size();
 	}
 	
-	public void selectGroup(int i) {
+	public void select(int i) {
 		selectElement(i);
 	}
 	
-	public List<GroupData> getGroupList() {
+	public List<GroupData> getList() {
 		List<GroupData> groups=new ArrayList<GroupData>();
 		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
 		for(WebElement we:pageElements){
@@ -93,10 +89,15 @@ public class GroupHelper extends BaseHelper {
 		return groups;
 		
 	}
-	public void modifyGroup(int modifiedIndex, GroupData modified) {
-		selectGroup(modifiedIndex);
+	public void modify(int modifiedIndex, GroupData modified) {
+		select(modifiedIndex);
 		openGroup();
-		fillGroupForm(modified);
+		fillForm(modified);
 		saveChanges();
+	}
+	public void delete(int deletedIndex) {
+		select(deletedIndex);
+		deleteChosen();
+		returnToGroupPage();
 	}
 }

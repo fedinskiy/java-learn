@@ -49,15 +49,15 @@ public class ApplicationManager {
 		wd.quit();
 	}
 	
-	public GroupHelper getGroupHelper() {
+	public GroupHelper groups() {
 		return groupHelper;
 	}
 	
-	public ContactHelper getContactHelper() {
+	public ContactHelper contacts() {
 		return contactHelper;
 	}
 	
-	public AppNavigation getNavigation() {
+	public AppNavigation moveTo() {
 		return appNavigation;
 	}
 	

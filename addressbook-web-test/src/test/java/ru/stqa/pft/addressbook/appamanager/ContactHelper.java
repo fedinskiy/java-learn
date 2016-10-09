@@ -65,11 +65,11 @@ public class ContactHelper extends BaseHelper {
 		this.pressButton("update");
 	}
 	
-	public void chooseContact() {
+	public void choose() {
 		selectElement();
 	}
 	
-	public void chooseContact(int i) {
+	public void choose(int i) {
 		selectElement(i);
 	}
 	
@@ -78,20 +78,14 @@ public class ContactHelper extends BaseHelper {
 	}
 	
 	
-	public void createContact(ContactData contactData) {
+	public void create(ContactData contactData) {
 		initContact();
 		fillContactForm(contactData, true);
 		pressButtonByXPath("//div[@id='content']/form/input[21]");
 		
-	}
+	}`
 	
-	public boolean isAnyContactsThere() {
-		String pageCounterValue = wd.findElement(By.id("search_count")).getText();
-		int numberOfElements=(pageCounterValue.isEmpty())?0:Integer.parseInt(pageCounterValue);
-		return numberOfElements>0;
-	}
-	
-	public List<ContactData> getContactList() {
+	public List<ContactData> getList() {
 		final int NAME_COLUMN_NUMBER=2;
 		final int LAST_NAME_COLUMN_NUMBER=1;
 		List<ContactData> contacts=new ArrayList<ContactData>();
@@ -107,5 +101,16 @@ public class ContactHelper extends BaseHelper {
 			contacts.add(contact);
 		}
 		return contacts;
+	}
+	
+	public void modify(int modifiedIndex, ContactData modified) {
+		editContact(modifiedIndex);
+		fillContactForm(modified, false);
+		saveContact();
+	}
+	public void delete(int deleteIndex) {
+		choose(deleteIndex);
+		pressDeleteButton();
+		acceptDialog();
 	}
 }

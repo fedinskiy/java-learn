@@ -5,8 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -15,9 +13,9 @@ import java.util.List;
 public class GroupModificationTest extends AddressBookTest {
 	@BeforeMethod
 	public void ensurePreconditions(){
-		app.getNavigation().gotoGroupPage();
-		if (!app.getGroupHelper().isGroupThere()) {
-			app.getGroupHelper().createGroup(new GroupData("TestGroupName", null, null));
+		app.moveTo().groupsPage();
+		if (app.groups().getList().size()==0) {
+			app.groups().create(new GroupData("TestGroupName", null, null));
 		}
 	}
 	 
@@ -27,21 +25,21 @@ public class GroupModificationTest extends AddressBookTest {
 		GroupData modified;
 	
 		
-		List<GroupData> before = app.getGroupHelper().getGroupList();
+		List<GroupData> before = app.groups().getList();
 		modifiedIndex=before.size()-1;
 		
 		modified=new GroupData(before.get(modifiedIndex).getId(), "t1", "t2", "t3");
 		
-		app.getGroupHelper().modifyGroup(modifiedIndex, modified);
+		app.groups().modify(modifiedIndex, modified);
 		
-		app.getGroupHelper().returnToGroupPage();
+		app.groups().returnToGroupPage();
 		
-		List<GroupData> after = app.getGroupHelper().getGroupList();
+		List<GroupData> after = app.groups().getList();
 		Assert.assertEquals(after.size(), before.size());
 		before.remove(modifiedIndex);
 		before.add(modified);
-		before.sort(app.getGroupHelper().getComparator());
-		after.sort(app.getGroupHelper().getComparator());
+		before.sort(app.groups().getComparator());
+		after.sort(app.groups().getComparator());
 		Assert.assertEquals(after, before);
 	}
 	
