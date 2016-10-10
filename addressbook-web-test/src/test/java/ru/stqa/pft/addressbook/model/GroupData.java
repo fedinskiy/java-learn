@@ -7,11 +7,6 @@ public class  GroupData {
 	private String id=String.valueOf(Integer.MAX_VALUE);
 	
 	@Override
-	public int hashCode() {
-		return name != null ? name.hashCode() : 0;
-	}
-	
-	@Override
 	public String toString() {
 		return "GroupData{" +
 				"name='" + name + '\'' +
@@ -69,7 +64,15 @@ public class  GroupData {
 		
 		GroupData groupData = (GroupData) o;
 		
-		return name != null ? name.equals(groupData.name) : groupData.name == null;
+		if (!name.equals(groupData.name)) return false;
+		return id.equals(groupData.id);
 		
+	}
+	
+	@Override
+	public int hashCode() {
+		int result = name.hashCode();
+		result = 31 * result + id.hashCode();
+		return result;
 	}
 }

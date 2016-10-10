@@ -5,9 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
 
@@ -29,10 +27,9 @@ public class GroupHelper extends BaseHelper {
 		pressButton("edit");
 	}
 	
-	public void select() {
-		selectElement();
+	private void selectById(int idNumber) {
+		wd.findElement(By.cssSelector("input[value='"+idNumber+"']")).click();
 	}
-	
 	public void returnToGroupPage() {
 		wd.findElement(By.linkText("group page")).click();
 	}
@@ -68,15 +65,6 @@ public class GroupHelper extends BaseHelper {
 		returnToGroupPage();
 	}
 	
-	
-	public int getCount() {
-		return wd.findElements(By.name("selected[]" )).size();
-	}
-	
-	public void select(int i) {
-		selectElement(i);
-	}
-	
 	public List<GroupData> getList() {
 		List<GroupData> groups=new ArrayList<GroupData>();
 		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
@@ -86,17 +74,30 @@ public class GroupHelper extends BaseHelper {
 			groups.add(new GroupData().withId(id).withName(name));
 		}
 		return groups;
-		
 	}
-	public void modify(int modifiedIndex, GroupData modified) {
-		select(modifiedIndex);
+	public Set<GroupData> getSet() {
+		Set<GroupData> groups=new HashSet<GroupData>();
+		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
+		for(WebElement we:pageElements){
+			String name=we.getText();
+			String id = we.findElement(By.tagName("input")).getAttribute("value");
+			groups.add(new GroupData().withId(id).withName(name));
+		}
+		return groups;
+	}
+
+	public void modify(GroupData modified) {
+		selectById(modified.getIdNumber());
 		openGroup();
 		fillForm(modified);
 		saveChanges();
 	}
-	public void delete(int deletedIndex) {
-		select(deletedIndex);
+	
+	public void delete(GroupData toDelete) {
+		selectById(toDelete.getIdNumber());
 		deleteChosen();
 		returnToGroupPage();
 	}
+	
+
 }
