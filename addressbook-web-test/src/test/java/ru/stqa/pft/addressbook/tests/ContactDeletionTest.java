@@ -3,28 +3,28 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by owlowl on 24.09.16.
  */
 public class ContactDeletionTest extends AddressBookTest {
 	
-	@Test//(enabled = false)
+	@Test
 	public void deleteContactFromTable() {
 		ensurePreconditions();
-		List<ContactData> before = app.contacts().getList();
-		int deleteIndex = 0;
-		
-		app.contacts().delete(deleteIndex);
+		Set<ContactData> before = app.contacts().getSet();
+		ContactData toDelete=before.iterator().next();
+				
+		app.contacts().delete(toDelete);
 		
 		app.moveTo().contactsPage();
-		List<ContactData> after = app.contacts().getList();
+		Set<ContactData> after = app.contacts().getSet();
 		Assert.assertEquals(after.size(), before.size() - 1);
-		before.remove(deleteIndex);
-		after.sort(app.contacts().getComparator());
-		before.sort(app.contacts().getComparator());
+		before.remove(toDelete);
 		Assert.assertEquals(after, before);
 	}
 	

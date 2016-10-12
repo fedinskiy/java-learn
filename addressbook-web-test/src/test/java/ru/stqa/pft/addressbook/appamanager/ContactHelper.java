@@ -6,9 +6,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by owlowl on 22.09.16.
@@ -31,14 +29,16 @@ public class ContactHelper extends BaseHelper {
 		HandyFunctions.setFieldValue("mobile", contactData.getMobilePhone(), wd);
 		HandyFunctions.setFieldValue("email", contactData.getEmail(), wd);
 		
-		
-		HandyFunctions.chooseInSelector(1, contactData.getBirth().getSelectorDay(), wd);
-		HandyFunctions.chooseInSelector(2, contactData.getBirth().getSelectorMonth(), wd);
-		HandyFunctions.setFieldValue("byear", contactData.getBirth().getYear(), wd);
-		HandyFunctions.chooseInSelector(3, contactData.getAnniversary().getSelectorDay(), wd);
-		HandyFunctions.chooseInSelector(4, contactData.getAnniversary().getSelectorMonth(), wd);
-		HandyFunctions.setFieldValue("ayear", contactData.getAnniversary().getYear(), wd);
-		
+		if (null != contactData.getBirth()) {
+			HandyFunctions.chooseInSelector(1, contactData.getBirth().getSelectorDay(), wd);
+			HandyFunctions.chooseInSelector(2, contactData.getBirth().getSelectorMonth(), wd);
+			HandyFunctions.setFieldValue("byear", contactData.getBirth().getYear(), wd);
+		}
+		if (null != contactData.getAnniversary()) {
+			HandyFunctions.chooseInSelector(3, contactData.getAnniversary().getSelectorDay(), wd);
+			HandyFunctions.chooseInSelector(4, contactData.getAnniversary().getSelectorMonth(), wd);
+			HandyFunctions.setFieldValue("ayear", contactData.getAnniversary().getYear(), wd);
+		}
 		//selectContactGroup(2);
 		if (creation) {
 			selectContactGroup(contactData.getGroup());
@@ -84,7 +84,23 @@ public class ContactHelper extends BaseHelper {
 		pressButtonByXPath("//div[@id='content']/form/input[21]");
 		
 	}
-	
+	public Set<ContactData> getSet(){
+		final int NAME_COLUMN_NUMBER=2;
+		final int LAST_NAME_COLUMN_NUMBER=1;
+		Set<ContactData> contacts=new HashSet<>();
+		List<WebElement> pageElements=	wd.findElements(By.name("entry" ));
+		for(WebElement we:pageElements){
+			String name=we.findElements(By.tagName("td")).get(NAME_COLUMN_NUMBER).getText();
+			String lastName=we.findElements(By.tagName("td")).get(LAST_NAME_COLUMN_NUMBER).getText();
+			String id =we.findElement(By.className("center")).findElement(By.name("selected[]")).getAttribute("id");
+			Assert.assertNotNull(id);
+			Assert.assertNotEquals(id,"","Пустое поле id");
+			ContactData contact= new ContactData(name,lastName, null,null,null,null,null,null);
+			contact.withId(id);
+			contacts.add(contact);
+		}
+		return contacts;
+	}
 	public List<ContactData> getList() {
 		final int NAME_COLUMN_NUMBER=2;
 		final int LAST_NAME_COLUMN_NUMBER=1;
@@ -97,7 +113,7 @@ public class ContactHelper extends BaseHelper {
 			Assert.assertNotNull(id);
 			Assert.assertNotEquals(id,"","Пустое поле id");
 			ContactData contact= new ContactData(name,lastName, null,null,null,null,null,null);
-			contact.setId(id);
+			contact.withId(id);
 			contacts.add(contact);
 		}
 		return contacts;
@@ -112,5 +128,25 @@ public class ContactHelper extends BaseHelper {
 		choose(deleteIndex);
 		pressDeleteButton();
 		acceptDialog();
+	}
+	
+	public void delete(ContactData toDelete) {
+		selectById(toDelete.getId());
+		pressDeleteButton();
+		acceptDialog();
+	}
+	
+	private void selectById(int id) {
+		wd.findElement(By.cssSelector("input[id='"+id+"']")).click();
+	}
+	
+	public void modify(ContactData modified) {
+		editContactById(modified.getId());
+		fillContactForm(modified, false);
+		saveContact();
+	}
+	
+	private void editContactById(int id) {
+		wd.findElement(By.xpath("//a[contains(@href,\"edit.php?id="+id+"\")]")).click();
 	}
 }
