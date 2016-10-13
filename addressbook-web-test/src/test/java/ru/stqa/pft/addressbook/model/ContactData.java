@@ -110,6 +110,10 @@ public class ContactData {
 		this.anniversary = new ThreePartDate(anniversary);
 		return this;
 	}
+	public ContactData withGroup(String groupName) {
+		this.group = groupName;
+		return this;
+	}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -136,6 +140,8 @@ public class ContactData {
 				'}';
 	}
 	
+
+	
 	public class ThreePartDate {
 		private int day;
 		private int month;
@@ -157,7 +163,7 @@ public class ContactData {
 		
 		public ThreePartDate(int _day, int _month, String _year) {
 			this.day = _day+2;
-			this.month = _month+2;
+			this.month = _month+1;
 			this.year = _year;
 		}
 		

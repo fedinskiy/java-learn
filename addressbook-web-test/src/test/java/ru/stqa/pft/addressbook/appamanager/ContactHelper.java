@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.*;
 
@@ -12,8 +13,8 @@ import java.util.*;
  * Created by owlowl on 22.09.16.
  */
 public class ContactHelper extends BaseHelper {
-
 	
+	private Contacts contactsCash;
 	private static final Comparator<ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
 	
 	public ContactHelper(RemoteWebDriver wd) {
@@ -81,13 +82,21 @@ public class ContactHelper extends BaseHelper {
 	public void create(ContactData contactData) {
 		initContact();
 		fillContactForm(contactData, true);
+		this.contactsCash=null;
 		pressButtonByXPath("//div[@id='content']/form/input[21]");
 		
 	}
-	public Set<ContactData> getSet(){
+	public Contacts getSet(){
+		return getSet(false);
+	}
+	public Contacts getSet(Boolean regetCache){
 		final int NAME_COLUMN_NUMBER=2;
 		final int LAST_NAME_COLUMN_NUMBER=1;
-		Set<ContactData> contacts=new HashSet<>();
+		
+		if (!(regetCache||null==contactsCash)) {
+			return contactsCash;
+		}
+		contactsCash = new Contacts();
 		List<WebElement> pageElements=	wd.findElements(By.name("entry" ));
 		for(WebElement we:pageElements){
 			String name=we.findElements(By.tagName("td")).get(NAME_COLUMN_NUMBER).getText();
@@ -97,9 +106,12 @@ public class ContactHelper extends BaseHelper {
 			Assert.assertNotEquals(id,"","Пустое поле id");
 			ContactData contact= new ContactData(name,lastName, null,null,null,null,null,null);
 			contact.withId(id);
-			contacts.add(contact);
+			contactsCash.add(contact);
 		}
-		return contacts;
+		return contactsCash;
+	}
+	public int getCount() {
+		return wd.findElements(By.name("selected[]")).size();
 	}
 	public List<ContactData> getList() {
 		final int NAME_COLUMN_NUMBER=2;
@@ -119,20 +131,10 @@ public class ContactHelper extends BaseHelper {
 		return contacts;
 	}
 	
-	public void modify(int modifiedIndex, ContactData modified) {
-		editContact(modifiedIndex);
-		fillContactForm(modified, false);
-		saveContact();
-	}
-	public void delete(int deleteIndex) {
-		choose(deleteIndex);
-		pressDeleteButton();
-		acceptDialog();
-	}
-	
 	public void delete(ContactData toDelete) {
 		selectById(toDelete.getId());
 		pressDeleteButton();
+		this.contactsCash=null;
 		acceptDialog();
 	}
 	
@@ -143,6 +145,7 @@ public class ContactHelper extends BaseHelper {
 	public void modify(ContactData modified) {
 		editContactById(modified.getId());
 		fillContactForm(modified, false);
+		this.contactsCash=null;
 		saveContact();
 	}
 	
