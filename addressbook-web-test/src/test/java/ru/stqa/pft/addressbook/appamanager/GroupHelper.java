@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.*;
 
@@ -75,8 +76,8 @@ public class GroupHelper extends BaseHelper {
 		}
 		return groups;
 	}
-	public Set<GroupData> getSet() {
-		Set<GroupData> groups=new HashSet<GroupData>();
+	public Groups getSet() {
+		Groups groups=new Groups();
 		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
 		for(WebElement we:pageElements){
 			String name=we.getText();
@@ -98,6 +99,4 @@ public class GroupHelper extends BaseHelper {
 		deleteChosen();
 		returnToGroupPage();
 	}
-	
-
 }

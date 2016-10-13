@@ -4,9 +4,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by owlowl on 23.09.16.
@@ -25,21 +29,17 @@ public class GroupModificationTest extends AddressBookTest {
 		GroupData oldVersion;
 	
 		
-		Set<GroupData> before = app.groups().getSet();
+		Groups before = app.groups().getSet();
 		oldVersion=before.iterator().next();
 		GroupData newVersion=new GroupData().withName("T_1").withHeader("T_2").withFooter("T_3").withId(before.iterator().next().getId());
 		
 		app.groups().modify(newVersion);
-		
 		app.groups().returnToGroupPage();
 		
-		Set<GroupData> after = app.groups().getSet();
-		Assert.assertEquals(after.size(), before.size());
-		before.remove(oldVersion);
-		before.add(newVersion);
+		Groups after = app.groups().getSet();
 		
-		Assert.assertEquals(after, before);
+		Assert.assertEquals(after.size(), before.size());
+		before.without(oldVersion).withAdded(newVersion);
+		assertThat(after, equalTo(before.without(oldVersion).withAdded(newVersion)));
 	}
-	
-
 }
