@@ -14,8 +14,9 @@ import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
  * Created by owlowl on 22.09.16.
  */
 public class GroupHelper extends BaseHelper {
-
-	private static final Comparator<? super GroupData> byId= (g1, g2)-> Integer.compare(g1.getIdNumber(), g2.getIdNumber());
+	private Groups groupCache;
+	private static final Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getIdNumber(), g2.getIdNumber());
+	
 	public Comparator<? super GroupData> getComparator() {
 		return byId;
 	}
@@ -29,8 +30,9 @@ public class GroupHelper extends BaseHelper {
 	}
 	
 	private void selectById(int idNumber) {
-		wd.findElement(By.cssSelector("input[value='"+idNumber+"']")).click();
+		wd.findElement(By.cssSelector("input[value='" + idNumber + "']")).click();
 	}
+	
 	public void returnToGroupPage() {
 		wd.findElement(By.linkText("group page")).click();
 	}
@@ -58,45 +60,45 @@ public class GroupHelper extends BaseHelper {
 		this.pressButton("delete");
 	}
 	
-
+	
 	public void create(GroupData groupData) {
 		init();
 		fillForm(groupData);
 		submitGroupCreation();
+		groupCache=null;
 		returnToGroupPage();
 	}
 	
-	public List<GroupData> getList() {
-		List<GroupData> groups=new ArrayList<GroupData>();
-		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
-		for(WebElement we:pageElements){
-			String name=we.getText();
-			String id = we.findElement(By.tagName("input")).getAttribute("value");
-			groups.add(new GroupData().withId(id).withName(name));
+	public Groups getSet(Boolean resetCache) {
+		if (!(resetCache || null == groupCache)) {
+			return new Groups(groupCache);
 		}
-		return groups;
+		groupCache = new Groups();
+		List<WebElement> pageElements = wd.findElements(By.cssSelector("span.group"));
+		for (WebElement we : pageElements) {
+			String name = we.getText();
+			String id = we.findElement(By.tagName("input")).getAttribute("value");
+			groupCache.add(new GroupData().withId(id).withName(name));
+		}
+		return new Groups(groupCache);
 	}
+	
 	public Groups getSet() {
-		Groups groups=new Groups();
-		List<WebElement> pageElements=	wd.findElements(By.cssSelector("span.group" ));
-		for(WebElement we:pageElements){
-			String name=we.getText();
-			String id = we.findElement(By.tagName("input")).getAttribute("value");
-			groups.add(new GroupData().withId(id).withName(name));
-		}
-		return groups;
+		return getSet(false);
 	}
-
+	
 	public void modify(GroupData modified) {
 		selectById(modified.getIdNumber());
 		openGroup();
 		fillForm(modified);
+		groupCache=null;
 		saveChanges();
 	}
 	
 	public void delete(GroupData toDelete) {
 		selectById(toDelete.getIdNumber());
 		deleteChosen();
+		groupCache=null;
 		returnToGroupPage();
 	}
 }
