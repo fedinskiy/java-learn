@@ -36,10 +36,8 @@ public class GroupModificationTest extends AddressBookTest {
 		app.groups().modify(newVersion);
 		app.groups().returnToGroupPage();
 		
+		Assert.assertEquals(before.size(),app.groups().getCount());
 		Groups after = app.groups().getSet();
-		
-		Assert.assertEquals(after.size(), before.size());
-		before.without(oldVersion).withAdded(newVersion);
 		assertThat(after, equalTo(before.without(oldVersion).withAdded(newVersion)));
 	}
 }

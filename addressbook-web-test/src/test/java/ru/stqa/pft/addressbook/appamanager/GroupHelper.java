@@ -101,4 +101,8 @@ public class GroupHelper extends BaseHelper {
 		groupCache=null;
 		returnToGroupPage();
 	}
+	
+	public int getCount() {
+		return wd.findElements(By.name("selected[]")).size();
+	}
 }

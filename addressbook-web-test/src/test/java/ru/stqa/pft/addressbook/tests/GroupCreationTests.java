@@ -22,15 +22,15 @@ public class GroupCreationTests extends AddressBookTest {
 		newGroup = new GroupData().withName("TestGroupNameSets");
 		app.groups().create(newGroup);
 		app.moveTo().groupsPage();
-		Groups after = app.groups().getSet();
+		assertThat(app.groups().getCount(), equalTo(before.size()+1));
 		
-		assertThat(after.size(), equalTo(before.size() + 1));
+		Groups after = app.groups().getSet();
+
 		newGroup.withId(after.stream().max(app.groups().getComparator()).get().getIdNumber());
 		ToIntFunction<? super GroupData> toInt = (g) -> g.getIdNumber();
 		
 		assertThat(after, equalTo(
 				before.withAdded(newGroup.withId(after.stream().mapToInt(toInt).max().getAsInt()))));
-		assertThat(after.size(), equalTo(before.size() + 1));
 	}
 	
 	@Test
@@ -39,17 +39,12 @@ public class GroupCreationTests extends AddressBookTest {
 		
 		app.moveTo().groupsPage();
 		Groups before = app.groups().getSet();
-		newGroup = new GroupData().withName("TestGroupNameSets");
+		newGroup = new GroupData().withName("TestGroupNameSets'");
 		app.groups().create(newGroup);
 		app.moveTo().groupsPage();
+		assertThat(app.groups().getCount(), equalTo(before.size()));
+		
 		Groups after = app.groups().getSet();
-		
-		assertThat(after.size(), equalTo(before.size() + 1));
-		newGroup.withId(after.stream().max(app.groups().getComparator()).get().getIdNumber());
-		ToIntFunction<? super GroupData> toInt = (g) -> g.getIdNumber();
-		
-		assertThat(after, equalTo(
-				before.withAdded(newGroup.withId(after.stream().mapToInt(toInt).max().getAsInt()))));
-		assertThat(after.size(), equalTo(before.size() + 1));
+				assertThat(after, equalTo(before));
 	}
 }
