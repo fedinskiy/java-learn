@@ -18,7 +18,7 @@ public class HandyFunctions {
 	
 	public static void setFieldValue(String newValue, RemoteWebDriver wd, By locator) {
 		wd.findElement(locator).click();
-		if (null != newValue) {
+		if (!(null == newValue||newValue.isEmpty())) {
 			String curText = wd.findElement(locator).getAttribute("value");
 			if (!curText.equals(newValue)) {
 				wd.findElement(locator).clear();
@@ -64,5 +64,8 @@ public class HandyFunctions {
 	}
 	public static void click(String link, RemoteWebDriver wd) {
 		wd.findElement(By.linkText(link)).click();
+	}
+	public static String cleanPhone(String source) {
+		return source.replaceAll("\\W","" );
 	}
 }

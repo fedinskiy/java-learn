@@ -1,10 +1,11 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook.tests.contacts;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.tests.AddressBookTest;
 
 /**
  * Created by owlowl on 24.09.16.
@@ -31,7 +32,7 @@ public class ContactModificationTest extends AddressBookTest {
 	@BeforeMethod
 	public void ensurePreconditions() {
 		app.moveTo().contactsPage();
-		if (app.contacts().getList().size() == 0) {
+		if (app.contacts().getSet().size() == 0) {
 			app.contacts().create(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001", "TestGroupName"));
 			app.moveTo().contactsPage();
 		}

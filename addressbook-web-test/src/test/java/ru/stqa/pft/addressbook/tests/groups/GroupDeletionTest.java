@@ -1,21 +1,22 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook.tests.groups;
 
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
-
-import java.util.List;
-import java.util.Set;
+import ru.stqa.pft.addressbook.tests.AddressBookTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by owlowl on 23.09.16.
  */
-public class GroupModificationTest extends AddressBookTest {
+public class GroupDeletionTest extends AddressBookTest {
+	
 	@BeforeMethod
 	public void ensurePreconditions(){
 		app.moveTo().groupsPage();
@@ -23,21 +24,21 @@ public class GroupModificationTest extends AddressBookTest {
 			app.groups().create(new GroupData().withId("TestGroupName"));
 		}
 	}
-	 
-	@Test
-	public void testGroupModification() {
-		GroupData oldVersion;
 	
-		
+	@Test
+	public void deleteGroup()
+	{
+		ensurePreconditions();
 		Groups before = app.groups().getSet();
-		oldVersion=before.iterator().next();
-		GroupData newVersion=new GroupData().withName("T_1").withHeader("T_2").withFooter("T_3").withId(before.iterator().next().getId());
+		GroupData toDelete=before.iterator().next();
 		
-		app.groups().modify(newVersion);
-		app.groups().returnToGroupPage();
+		app.groups().delete(toDelete);
 		
-		Assert.assertEquals(before.size(),app.groups().getCount());
+		assertEquals(app.groups().getCount(),equalTo(before.size()-1));
+		
 		Groups after = app.groups().getSet();
-		assertThat(after, equalTo(before.without(oldVersion).withAdded(newVersion)));
+		assertThat(after,equalTo(before.without(toDelete)));
 	}
+	
+
 }

@@ -35,4 +35,13 @@ public class BaseHelper {
 	public void acceptDialog(){
 		wd.switchTo().alert().accept();
 	}
+	
+	public String getFieldValue(String fieldName) {
+		return getFieldValue(By.name(fieldName));
+	}
+	
+	public String getFieldValue(By locator) {
+		String curText = wd.findElement(locator).getAttribute("value");
+		return curText;
+	}
 }

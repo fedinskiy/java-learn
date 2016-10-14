@@ -2,17 +2,22 @@ package ru.stqa.pft.addressbook.model;
 
 import java.util.regex.Pattern;
 
+import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.cleanPhone;
+
 public class ContactData {
 	private String firstName;
 	private String lastName;
 	private String address;
 	private String mobilePhone;
+	private String workPhone;
+	private String homePhone;
 	private String email;
 	private ThreePartDate birth;
 	private ThreePartDate anniversary;
 	private String group;
 	private int id;
 	private final int DEFAULT_ID = Integer.MAX_VALUE;
+
 	
 	public ContactData() {
 		this.birth = null;
@@ -51,9 +56,7 @@ public class ContactData {
 		return address;
 	}
 	
-	public String getMobilePhone() {
-		return mobilePhone;
-	}
+	
 	
 	public String getEmail() {
 		return email;
@@ -70,6 +73,29 @@ public class ContactData {
 	public String getGroup() {
 		return group;
 	}
+	
+	public String getMobilePhone(boolean...asPlainText ) {
+		if(asPlainText.length>0) {
+			return cleanPhone(mobilePhone);
+		}else{
+			return mobilePhone;
+		}
+	}
+	public String getWorkPhone(boolean...asPlainText ) {
+		if(asPlainText.length>0) {
+			return cleanPhone(workPhone);
+		}else{
+			return workPhone;
+		}
+	}
+	public String getHomePhone(boolean...asPlainText ) {
+		if(asPlainText.length>0) {
+			return cleanPhone(homePhone);
+		}else{
+			return homePhone;
+		}
+	}
+	
 	
 	public int getId() {
 		return id;
@@ -110,8 +136,23 @@ public class ContactData {
 		this.anniversary = new ThreePartDate(anniversary);
 		return this;
 	}
+	
 	public ContactData withGroup(String groupName) {
 		this.group = groupName;
+		return this;
+	}
+	
+	public ContactData withMobilePhone(String number) {
+		this.mobilePhone = number;
+		return this;
+	}
+	
+	public ContactData withWorkPhone(String number) {
+		this.workPhone = number;
+		return this;
+	}
+	public ContactData withHomePhone(String number) {
+		this.homePhone = number;
 		return this;
 	}
 	
@@ -140,7 +181,6 @@ public class ContactData {
 				'}';
 	}
 	
-
 	
 	public class ThreePartDate {
 		private int day;
@@ -162,8 +202,8 @@ public class ContactData {
 		}
 		
 		public ThreePartDate(int _day, int _month, String _year) {
-			this.day = _day+2;
-			this.month = _month+1;
+			this.day = _day + 2;
+			this.month = _month + 1;
 			this.year = _year;
 		}
 		
