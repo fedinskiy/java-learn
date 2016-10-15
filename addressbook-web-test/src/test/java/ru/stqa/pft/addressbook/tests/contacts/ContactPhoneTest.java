@@ -17,9 +17,7 @@ public class ContactPhoneTest extends AddressBookTest {
 		ContactData fromTable = app.contacts().getSet().iterator().next();
 		ContactData fromPage = app.contacts().infoFromEditForm(fromTable);
 		Assert.assertEquals(fromPage.getId(),fromTable.getId());
-		Assert.assertEquals(fromPage.getMobilePhone(asPlainText),fromTable.getMobilePhone(asPlainText));
-		Assert.assertEquals(fromPage.getWorkPhone(asPlainText),fromTable.getWorkPhone(asPlainText));
-		Assert.assertEquals(fromPage.getHomePhone(asPlainText),fromTable.getHomePhone(asPlainText));
+		Assert.assertEquals(fromPage.getAllPhones(asPlainText),fromTable.getAllPhones(asPlainText));
 	}
 	@BeforeMethod
 	public void ensurePreconditions() {

@@ -9,6 +9,8 @@ import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.*;
 
+import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.STRING_SEPARATOR;
+
 /**
  * Created by owlowl on 22.09.16.
  */
@@ -106,12 +108,14 @@ public class ContactHelper extends BaseHelper {
 			String name=cells.get(NAME_COLUMN_NUMBER).getText();
 			String lastName=cells.get(LAST_NAME_COLUMN_NUMBER).getText();
 			String allphones=cells.get(NUMBERS_COLUMN_NUMBER).getText();
-			String[] phoneArr = allphones.split("\n");
+			String[] phoneArr = allphones.split(STRING_SEPARATOR);
 			
 			String id =row.findElement(By.className("center")).findElement(By.name("selected[]")).getAttribute("id");
 			ContactData contact= new ContactData().withFirstName(name).withLastName(lastName).withId(id);
-			if (phoneArr.length>=2){
+			if (phoneArr.length>=3) {
 				contact.withHomePhone(phoneArr[0]).withMobilePhone(phoneArr[1]).withWorkPhone(phoneArr[2]);
+			}else{
+				contact.withAllPhones(allphones);
 			}
 			
 			contactsCash.add(contact);

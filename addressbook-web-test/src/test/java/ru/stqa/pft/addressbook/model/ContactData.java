@@ -1,7 +1,10 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.STRING_SEPARATOR;
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.cleanPhone;
 
 public class ContactData {
@@ -11,13 +14,14 @@ public class ContactData {
 	private String mobilePhone;
 	private String workPhone;
 	private String homePhone;
+	private String allPhones;
 	private String email;
 	private ThreePartDate birth;
 	private ThreePartDate anniversary;
 	private String group;
 	private int id;
 	private final int DEFAULT_ID = Integer.MAX_VALUE;
-
+	
 	
 	public ContactData() {
 		this.birth = null;
@@ -57,7 +61,6 @@ public class ContactData {
 	}
 	
 	
-	
 	public String getEmail() {
 		return email;
 	}
@@ -74,28 +77,40 @@ public class ContactData {
 		return group;
 	}
 	
-	public String getMobilePhone(boolean...asPlainText ) {
-		if(asPlainText.length>0) {
+	public String getMobilePhone(boolean... asPlainText) {
+		if (asPlainText.length > 0) {
 			return cleanPhone(mobilePhone);
-		}else{
+		} else {
 			return mobilePhone;
 		}
 	}
-	public String getWorkPhone(boolean...asPlainText ) {
-		if(asPlainText.length>0) {
+	
+	public String getWorkPhone(boolean... asPlainText) {
+		if (asPlainText.length > 0) {
 			return cleanPhone(workPhone);
-		}else{
+		} else {
 			return workPhone;
 		}
 	}
-	public String getHomePhone(boolean...asPlainText ) {
-		if(asPlainText.length>0) {
+	
+	public String getHomePhone(boolean... asPlainText) {
+		if (asPlainText.length > 0) {
 			return cleanPhone(homePhone);
-		}else{
+		} else {
 			return homePhone;
 		}
 	}
 	
+	public String getAllPhones(boolean... asPlainText) {
+		String retval;
+		if ((null == allPhones) || allPhones.isEmpty()) {
+			retval=Arrays.asList(getHomePhone(asPlainText),getMobilePhone(asPlainText),getWorkPhone(asPlainText))
+					.stream().filter((s)->!(null==s||s.isEmpty())).collect(Collectors.joining(STRING_SEPARATOR));
+		} else {
+			retval = (asPlainText.length > 0) ? cleanPhone(allPhones) : this.allPhones;
+		}
+		return retval;
+	}
 	
 	public int getId() {
 		return id;
@@ -151,6 +166,7 @@ public class ContactData {
 		this.workPhone = number;
 		return this;
 	}
+	
 	public ContactData withHomePhone(String number) {
 		this.homePhone = number;
 		return this;
@@ -179,6 +195,12 @@ public class ContactData {
 				", lastName='" + lastName + '\'' +
 				", id=" + id +
 				'}';
+	}
+	
+	public ContactData withAllPhones(String allphones) {
+		this.allPhones = allphones;
+		return this;
+		
 	}
 	
 	

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.Select;
  * Created by owlowl on 22.09.16.
  */
 public class HandyFunctions {
+	public static final String STRING_SEPARATOR="\n";
 	public static void setFieldValue(String fieldName, String newValue, RemoteWebDriver wd) {
 		setFieldValue(newValue, wd, By.name(fieldName));
 	}
