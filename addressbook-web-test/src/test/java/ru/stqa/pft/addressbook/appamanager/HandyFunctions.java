@@ -66,6 +66,6 @@ public class HandyFunctions {
 		wd.findElement(By.linkText(link)).click();
 	}
 	public static String cleanPhone(String source) {
-		return source.replaceAll("\\W","" );
+		return source.replaceAll("[ \\-()]","" );
 	}
 }
