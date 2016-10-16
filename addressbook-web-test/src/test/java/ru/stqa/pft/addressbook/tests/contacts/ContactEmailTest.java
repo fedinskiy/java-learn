@@ -6,18 +6,17 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.AddressBookTest;
 
-
 /**
- * Created by owlowl on 16.10.16.
+ * Created by owlowl on 14.10.16.
  */
-public class ContactAddressTest extends AddressBookTest {
+public class ContactEmailTest extends AddressBookTest {
 	@Test
 	public void testPhones() {
 		app.moveTo().contactsPage();
 		ContactData fromTable = app.contacts().getSet().iterator().next();
 		ContactData fromPage = app.contacts().infoFromEditForm(fromTable);
 		Assert.assertEquals(fromPage.getId(),fromTable.getId());
-		Assert.assertEquals(fromPage.getAddress(),fromTable.getAddress());
+		Assert.assertEquals(fromPage.getAllEmails(),fromTable.getAllEmails());
 	}
 	@BeforeMethod
 	public void ensurePreconditions() {
@@ -27,4 +26,6 @@ public class ContactAddressTest extends AddressBookTest {
 			app.moveTo().contactsPage();
 		}
 	}
+	
+	
 }

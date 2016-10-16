@@ -110,17 +110,24 @@ public class ContactHelper extends BaseHelper {
 			String name=cells.get(NAME_COLUMN_NUMBER).getText();
 			String lastName=cells.get(LAST_NAME_COLUMN_NUMBER).getText();
 			String address=cells.get(ADDRESS_COLUMN_NUMBER).getText();
-			String email=cells.get(EMAIL_COLUMN_NUMBER).getText();
+			String emails=cells.get(EMAIL_COLUMN_NUMBER).getText();
+			String[] emailArr = emails.split(STRING_SEPARATOR);
 			String allphones=cells.get(NUMBERS_COLUMN_NUMBER).getText();
 			String[] phoneArr = allphones.split(STRING_SEPARATOR);
 			
 			String id =row.findElement(By.className("center")).findElement(By.name("selected[]")).getAttribute("id");
 			ContactData contact= new ContactData().withFirstName(name).withLastName(lastName).withId(id)
-					.withAddress(address).withEmail(email);
+					.withAddress(address);
 			if (phoneArr.length>=3) {
 				contact.withHomePhone(phoneArr[0]).withMobilePhone(phoneArr[1]).withWorkPhone(phoneArr[2]);
 			}else{
 				contact.withAllPhones(allphones);
+			}
+			
+			if (emailArr.length>=3) {
+				contact.withEmail(emailArr[0]).withEmail2(emailArr[1]).withEmail3(emailArr[2]);
+			}else{
+				contact.withAllEmails(emails);
 			}
 			
 			contactsCash.add(contact);
