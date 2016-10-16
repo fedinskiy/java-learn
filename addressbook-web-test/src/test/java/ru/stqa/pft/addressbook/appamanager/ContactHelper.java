@@ -55,7 +55,9 @@ public class ContactHelper extends BaseHelper {
 	}
 	
 	private void selectContactGroup(String groupName) {
-		HandyFunctions.chooseInSelector(wd, "new_group", groupName);
+		if(!(null==groupName||groupName.isEmpty())) {
+			HandyFunctions.chooseInSelector(wd, "new_group", groupName);
+		}
 	}
 	
 	public void initContact() {
@@ -174,6 +176,18 @@ public class ContactHelper extends BaseHelper {
 		this.contactsCash=null;
 		saveContact();
 	}
+	public ContactData infoFromDetails(ContactData contact) {
+		showContactDetailsById(contact.getId());
+		String fullInfo=wd.findElement(By.id("content")).getText();
+		fullInfo=fullInfo.replaceAll(" \\(www.+\\)","");
+		ContactData retval = new ContactData().withId(contact.getId()).withFullInfo(fullInfo);
+		wd.navigate().back();
+		return retval;
+	}
+	
+	private void showContactDetailsById(int id) {
+		wd.findElement(By.xpath("//a[contains(@href,'view.php?id="+id+"')]")).click();
+	}
 	
 	private void editContactById(int id) {
 		wd.findElement(By.xpath("//a[contains(@href,'edit.php?id="+id+"')]")).click();
@@ -188,5 +202,6 @@ public class ContactHelper extends BaseHelper {
 		wd.navigate().back();
 		return retval;
 	}
-
+	
+	
 }

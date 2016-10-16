@@ -19,16 +19,19 @@ public class ContactData {
 	private String email;
 	private String email2;
 	private String email3;
+	private String fullInfo;
 	private ThreePartDate birth;
 	private ThreePartDate anniversary;
 	private String group;
 	private int id;
 	private final int DEFAULT_ID = Integer.MAX_VALUE;
+
 	
 	
 	public ContactData() {
 		this.birth = null;
 		this.anniversary = null;
+		this.id = DEFAULT_ID;
 	}
 	
 	public ContactData(String firstName, String lastName, String address, String mobilePhone, String email, String birth, String anniversary, String group) {
@@ -100,7 +103,7 @@ public class ContactData {
 		if (asPlainText.length > 0) {
 			return cleanPhone(mobilePhone);
 		} else {
-			return mobilePhone;
+			return (null==mobilePhone)?"":mobilePhone;
 		}
 	}
 	
@@ -108,7 +111,7 @@ public class ContactData {
 		if (asPlainText.length > 0) {
 			return cleanPhone(workPhone);
 		} else {
-			return workPhone;
+			return (null==workPhone)?"":workPhone;
 		}
 	}
 	
@@ -116,10 +119,26 @@ public class ContactData {
 		if (asPlainText.length > 0) {
 			return cleanPhone(homePhone);
 		} else {
-			return homePhone;
+			return (null==homePhone)?"":homePhone;
 		}
 	}
+	public String getMobilePhoneWithPrefix() {
+		String retval=getMobilePhone();
+		return (retval.isEmpty()?"":"M: "+retval);
+	}
+	public String getWorkPhoneWithPrefix() {
+		String retval=getWorkPhone();
+		return (retval.isEmpty()?"":"W: "+retval);
+	}
+	public String getHomePhoneWithPrefix() {
+		String retval=getHomePhone();
+		return (retval.isEmpty()?"":"H: "+retval);
+	}
 	
+	public String getAllPhonesWithPrefix() {
+		return Arrays.asList(getHomePhoneWithPrefix(),getMobilePhoneWithPrefix(),getWorkPhoneWithPrefix())
+				.stream().filter((s)->!(null==s||s.isEmpty())).collect(Collectors.joining(STRING_SEPARATOR));
+	}
 	public String getAllPhones(boolean... asPlainText) {
 		String retval;
 		if ((null == allPhones) || allPhones.isEmpty()) {
@@ -130,6 +149,20 @@ public class ContactData {
 		}
 		return retval;
 	}
+	
+	public String getFullInfo() {
+		String retval;
+		if ((null == fullInfo) || fullInfo.isEmpty()) {
+			retval=Arrays.asList(getFirstName()+" "+getLastName()+STRING_SEPARATOR+getAddress(),
+					getAllPhonesWithPrefix(),
+					getEmail(),getEmail2(),getEmail3())
+					.stream().filter((s)->!(null==s||s.isEmpty())).collect(Collectors.joining(STRING_SEPARATOR+STRING_SEPARATOR));
+		} else {
+			retval = this.fullInfo;
+		}
+		return retval;
+	}
+	
 	
 	public int getId() {
 		return id;
@@ -214,6 +247,11 @@ public class ContactData {
 		this.email3 = email3;
 		return this;
 	}
+	
+	public ContactData withFullInfo(String fullInfo) {
+		this.fullInfo=fullInfo;
+		return this;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -240,8 +278,6 @@ public class ContactData {
 	}
 	
 
-	
-	
 	
 	public class ThreePartDate {
 		private int day;
@@ -279,6 +315,28 @@ public class ContactData {
 		
 		public String getYear() {
 			return year;
+		}
+		
+		public String Readable(){
+			return String.valueOf(day-2)+"."+getMonth()+" "+year;
+		}
+		public String getMonth() {
+			switch (this.month) {
+			case 1:
+				return "January";
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+					
+			}
+			return "";
 		}
 	}
 	
