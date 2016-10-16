@@ -96,6 +96,8 @@ public class ContactHelper extends BaseHelper {
 	public Contacts getSet(Boolean regetCache){
 		final int NAME_COLUMN_NUMBER=2;
 		final int LAST_NAME_COLUMN_NUMBER=1;
+		final int ADDRESS_COLUMN_NUMBER = 3;
+		final int EMAIL_COLUMN_NUMBER = 4;
 		final int NUMBERS_COLUMN_NUMBER = 5;
 		
 		if (!(regetCache||null==contactsCash)) {
@@ -107,11 +109,14 @@ public class ContactHelper extends BaseHelper {
 			List <WebElement> cells =row.findElements(By.tagName("td"));
 			String name=cells.get(NAME_COLUMN_NUMBER).getText();
 			String lastName=cells.get(LAST_NAME_COLUMN_NUMBER).getText();
+			String address=cells.get(ADDRESS_COLUMN_NUMBER).getText();
+			String email=cells.get(EMAIL_COLUMN_NUMBER).getText();
 			String allphones=cells.get(NUMBERS_COLUMN_NUMBER).getText();
 			String[] phoneArr = allphones.split(STRING_SEPARATOR);
 			
 			String id =row.findElement(By.className("center")).findElement(By.name("selected[]")).getAttribute("id");
-			ContactData contact= new ContactData().withFirstName(name).withLastName(lastName).withId(id);
+			ContactData contact= new ContactData().withFirstName(name).withLastName(lastName).withId(id)
+					.withAddress(address).withEmail(email);
 			if (phoneArr.length>=3) {
 				contact.withHomePhone(phoneArr[0]).withMobilePhone(phoneArr[1]).withWorkPhone(phoneArr[2]);
 			}else{
@@ -125,6 +130,7 @@ public class ContactHelper extends BaseHelper {
 	public int getCount() {
 		return wd.findElements(By.name("selected[]")).size();
 	}
+	
 	@Deprecated
 	public List<ContactData> getList() {
 		final int NAME_COLUMN_NUMBER=2;
@@ -169,7 +175,9 @@ public class ContactHelper extends BaseHelper {
 	public ContactData infoFromEditForm(ContactData contact) {
 		editContactById(contact.getId());
 		ContactData retval = new ContactData().withId(contact.getId()).withFirstName(getFieldValue("firstname")).withLastName(getFieldValue("lastname"))
-				.withHomePhone(getFieldValue("home")).withMobilePhone(getFieldValue("mobile")).withWorkPhone(getFieldValue("work"));
+				.withHomePhone(getFieldValue("home")).withMobilePhone(getFieldValue("mobile")).withWorkPhone(getFieldValue("work"))
+				.withEmail(getFieldValue("email")).withEmail2(getFieldValue("email2")).withEmail3(getFieldValue("email3"))
+				.withAddress(getFieldValue("address"));
 		wd.navigate().back();
 		return retval;
 	}

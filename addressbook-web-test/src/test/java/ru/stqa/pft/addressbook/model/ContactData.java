@@ -15,7 +15,10 @@ public class ContactData {
 	private String workPhone;
 	private String homePhone;
 	private String allPhones;
+	private String allEmails;
 	private String email;
+	private String email2;
+	private String email3;
 	private ThreePartDate birth;
 	private ThreePartDate anniversary;
 	private String group;
@@ -63,6 +66,22 @@ public class ContactData {
 	
 	public String getEmail() {
 		return email;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public String getEmail3() {
+		return email3;
+	}
+	public String getAllEmails() {
+		String retval;
+		if ((null == allEmails) || allEmails.isEmpty()) {
+			retval=Arrays.asList(getEmail(),getEmail2(),getEmail3())
+					.stream().filter((s)->!(null==s||s.isEmpty())).collect(Collectors.joining(STRING_SEPARATOR));
+		} else {
+			retval = this.allEmails;
+		}
+		return retval;
 	}
 	
 	public ThreePartDate getBirth() {
@@ -202,6 +221,21 @@ public class ContactData {
 		return this;
 		
 	}
+	
+	public ContactData withEmail(String email) {
+		this.email = email;
+		return this;
+	}
+	
+	public ContactData withEmail2(String email2) {
+		this.email2 = email2;
+		return this;
+	}
+	public ContactData withEmail3(String email3) {
+		this.email3 = email3;
+		return this;
+	}
+	
 	
 	
 	public class ThreePartDate {

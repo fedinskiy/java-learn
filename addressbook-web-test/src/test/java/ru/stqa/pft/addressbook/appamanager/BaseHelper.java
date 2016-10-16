@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
+import org.testng.asserts.Assertion;
 
 import java.util.List;
 
@@ -41,7 +43,15 @@ public class BaseHelper {
 	}
 	
 	public String getFieldValue(By locator) {
-		String curText = wd.findElement(locator).getAttribute("value");
+		WebElement contentHolder;
+		String curText;
+		contentHolder=wd.findElement(locator);
+		Assert.assertNotNull(contentHolder);
+		if ("textarea"==contentHolder.getTagName()){
+			curText=contentHolder.getText();
+		}else{
+			curText = contentHolder.getAttribute("value");
+		}
 		return curText;
 	}
 }
