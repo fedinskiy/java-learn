@@ -33,6 +33,7 @@ public class ContactHelper extends BaseHelper {
 		HandyFunctions.setFieldValue("home", contactData.getHomePhone(), wd);
 		HandyFunctions.setFieldValue("work", contactData.getWorkPhone(), wd);
 		HandyFunctions.setFieldValue("email", contactData.getEmail(), wd);
+		putFile("photo", contactData.getPhoto());
 		
 		if (null != contactData.getBirth()) {
 			HandyFunctions.chooseInSelector(1, contactData.getBirth().getSelectorDay(), wd);

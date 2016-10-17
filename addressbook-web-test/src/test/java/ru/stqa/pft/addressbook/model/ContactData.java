@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ public class ContactData {
 	private ThreePartDate birth;
 	private ThreePartDate anniversary;
 	private String group;
+	private File photo;
 	private int id;
 	private final int DEFAULT_ID = Integer.MAX_VALUE;
 
@@ -166,6 +168,15 @@ public class ContactData {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public File getPhoto() {
+		return photo;
+	}
+	
+	public ContactData withPhoto(File photo) {
+		this.photo = photo;
+		return this;
 	}
 	
 	public ContactData withId(String id) {
