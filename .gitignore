@@ -14,3 +14,4 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 .idea/.name
 .idea/misc.xml
+./addressbook-web-test/src/test/
