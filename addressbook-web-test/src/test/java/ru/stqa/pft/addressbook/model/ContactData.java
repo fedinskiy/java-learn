@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -9,9 +11,9 @@ import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.STRING_SEPARATO
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.cleanPhone;
 
 public class ContactData {
-	private String firstName;
-	private String lastName;
-	private String address;
+	@Expose	private String firstName;
+	@Expose private String lastName;
+	@Expose private String address;
 	private String mobilePhone;
 	private String workPhone;
 	private String homePhone;
@@ -263,20 +265,29 @@ public class ContactData {
 		this.fullInfo=fullInfo;
 		return this;
 	}
+	
 	@Override
 	public boolean equals(Object o) {
+		boolean result;
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		
 		ContactData that = (ContactData) o;
 		
-		return id == that.id || id == DEFAULT_ID || that.id == DEFAULT_ID;
+		if (id != that.id && id != DEFAULT_ID && that.id != DEFAULT_ID) return false;
+		if (!firstName.equals(that.firstName)) return false;
+		if (!lastName.equals(that.lastName)) return false;
+		result=address.equals(that.address);
+		return result;
 		
 	}
 	
 	@Override
 	public int hashCode() {
-		return id;
+		int result = firstName.hashCode();
+		result = 31 * result + lastName.hashCode();
+		result = 31 * result + address.hashCode();
+		return result;
 	}
 	
 	@Override
@@ -284,11 +295,11 @@ public class ContactData {
 		return "ContactData{" +
 				"firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
+				", address='" + address + '\'' +
 				", id=" + id +
 				'}';
 	}
 	
-
 	
 	public class ThreePartDate {
 		private int day;

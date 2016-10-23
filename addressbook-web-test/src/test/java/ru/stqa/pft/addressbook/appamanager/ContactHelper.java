@@ -1,12 +1,15 @@
 package ru.stqa.pft.addressbook.appamanager;
 
+import com.google.gson.Gson;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
+import java.io.*;
 import java.util.*;
 
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.STRING_SEPARATOR;
@@ -204,5 +207,27 @@ public class ContactHelper extends BaseHelper {
 		return retval;
 	}
 	
+	public Contacts loadFromDefaultJSON() throws IOException {
+		File source = new File("src/test/resources/contacts.json");
+		if (!source.exists()) {
+			throw new FileNotFoundException("Не найден файл " + source.getAbsolutePath());
+		}
+		return loadJSON(source);
+	}
 	
+	private Contacts loadJSON(File source) throws IOException {
+		Contacts contacts;
+		String json = "";
+		Gson gson = new Gson();
+		
+		try(BufferedReader reader = new BufferedReader(new FileReader(source))) {
+			String line = reader.readLine();
+			while (null != line) {
+				json += line;
+				line = reader.readLine();
+			}
+			contacts = gson.fromJson(json, Contacts.class);
+			return contacts;
+		}
+	}
 }
