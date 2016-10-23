@@ -1,11 +1,16 @@
 package ru.stqa.pft.addressbook.appamanager;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.io.*;
 import java.util.*;
 
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.setFieldValue;
@@ -65,7 +70,7 @@ public class GroupHelper extends BaseHelper {
 		init();
 		fillForm(groupData);
 		submitGroupCreation();
-		groupCache=null;
+		groupCache = null;
 		returnToGroupPage();
 	}
 	
@@ -91,18 +96,95 @@ public class GroupHelper extends BaseHelper {
 		selectById(modified.getIdNumber());
 		openGroup();
 		fillForm(modified);
-		groupCache=null;
+		groupCache = null;
 		saveChanges();
 	}
 	
 	public void delete(GroupData toDelete) {
 		selectById(toDelete.getIdNumber());
 		deleteChosen();
-		groupCache=null;
+		groupCache = null;
 		returnToGroupPage();
 	}
 	
 	public int getCount() {
 		return wd.findElements(By.name("selected[]")).size();
 	}
+	
+	public Groups loadFromDefault() throws IOException {
+		File source = new File("src/test/resources/groups.csv");
+		if (!source.exists()) {
+			throw new FileNotFoundException("Не найден файл " + source.getAbsolutePath());
+		}
+		return load(source);
+	}
+	
+	public Groups loadFromDefaultXML() throws IOException {
+		File source = new File("src/test/resources/groups.xml");
+		if (!source.exists()) {
+			throw new FileNotFoundException("Не найден файл " + source.getAbsolutePath());
+		}
+		return loadXML(source);
+	}
+	
+	public Groups loadFromDefaultJSON() throws IOException {
+		File source = new File("src/test/resources/groups.json");
+		if (!source.exists()) {
+			throw new FileNotFoundException("Не найден файл " + source.getAbsolutePath());
+		}
+		return loadJSON(source);
+	}
+	
+	private Groups loadJSON(File source) throws IOException {
+		Groups groups;
+		String json = "";
+		Gson gson = new Gson();
+		
+		try(BufferedReader reader = new BufferedReader(new FileReader(source))) {
+			String line = reader.readLine();
+			while (null != line) {
+				json += line;
+				line = reader.readLine();
+			}
+			groups = gson.fromJson(json, Groups.class);
+			return groups;
+		}
+	}
+	
+	private Groups loadXML(File file) throws IOException {
+		Groups groups;
+		String xml = "";
+		XStream xstream = new XStream();
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			
+			String line = reader.readLine();
+			while (null != line) {
+				xml += line;
+				line = reader.readLine();
+			}
+			xstream.processAnnotations(Groups.class);
+			xstream.processAnnotations(GroupData.class);
+			groups = new Groups((List<GroupData>) xstream.fromXML(xml));
+			return groups;
+		}
+	}
+	
+	private Groups load(File file) throws IOException {
+		String line;
+		String[] fromFile;
+		
+		Groups groups = new Groups();
+		try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			
+			line = reader.readLine();
+			while (null != line) {
+				fromFile = line.split(";");
+				groups = groups.withAdded(new GroupData().withName(fromFile[0]).withHeader(fromFile[1]).withFooter(fromFile[2]));
+				line = reader.readLine();
+			}
+			return groups;
+		}
+	}
+	
 }

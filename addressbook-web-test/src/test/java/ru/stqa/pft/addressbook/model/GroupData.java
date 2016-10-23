@@ -1,10 +1,33 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("group")
 public class  GroupData {
+	@Expose
 	private String name;
+	@Expose
 	private String header;
+	@Expose
 	private String footer;
+	
+	@XStreamOmitField
 	private String id=String.valueOf(Integer.MAX_VALUE);
+	
+	public GroupData(String name, String header, String footer) {
+		this.name = name;
+		this.header = header;
+		this.footer = footer;
+		id=String.valueOf(Integer.MAX_VALUE);
+	}
+	public GroupData() {
+		this.name = "";
+		this.header = "";
+		this.footer = "";
+		id=String.valueOf(Integer.MAX_VALUE);
+	}
 	
 	@Override
 	public String toString() {
@@ -72,6 +95,9 @@ public class  GroupData {
 	@Override
 	public int hashCode() {
 		int result = name.hashCode();
+		if(null==id){
+			id=String.valueOf(Integer.MAX_VALUE);
+		}
 		result = 31 * result + id.hashCode();
 		return result;
 	}
