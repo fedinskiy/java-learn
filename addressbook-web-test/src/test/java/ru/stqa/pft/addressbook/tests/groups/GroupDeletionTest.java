@@ -34,7 +34,7 @@ public class GroupDeletionTest extends AddressBookTest {
 		
 		app.groups().delete(toDelete);
 		
-		assertEquals(app.groups().getCount(),equalTo(before.size()-1));
+		assertEquals(app.groups().getCount(),before.size()-1);
 		
 		Groups after = app.groups().getSet();
 		assertThat(after,equalTo(before.without(toDelete)));

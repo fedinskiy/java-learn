@@ -9,5 +9,17 @@ dependencies{
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'
     compile 'com.beust:jcommander:1.58'
     compile 'com.thoughtworks.xstream:xstream:1.4.9'
-    compile 'com.solidfire.code.gson:gson:2.6.1'
+    compile 'com.solidfire.code.gson:gson:2.6.2'
 }
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
+}
+task testGroups (type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+}
+

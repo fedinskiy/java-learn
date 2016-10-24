@@ -8,6 +8,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Created by owlowl on 22.09.16.
  */
@@ -68,5 +71,11 @@ public class HandyFunctions {
 	}
 	public static String cleanPhone(String source) {
 		return source.replaceAll("[ \\-()]","" );
+	}
+	
+	public static void ensureFileExistense(File file) throws IOException {
+		if (!file.exists()) {
+			file.createNewFile();
+		}
 	}
 }

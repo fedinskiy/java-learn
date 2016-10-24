@@ -6,6 +6,7 @@ import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
+import ru.stqa.pft.addressbook.appamanager.HandyFunctions;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -63,8 +64,8 @@ public class GroupDataGenerator {
 		
 	}
 	
-	private void saveAsXML(Groups groups, File file) throws IOException {
-		ensureFileExistense(file);
+	private static void saveAsXML(Groups groups, File file) throws IOException {
+		HandyFunctions.ensureFileExistense(file);
 		XStream xstream = new XStream();
 		xstream.processAnnotations(Groups.class);
 		xstream.processAnnotations(GroupData.class);
@@ -74,18 +75,12 @@ public class GroupDataGenerator {
 		}
 	}
 	
-	private void save(Groups groups, File file) throws IOException {
-		ensureFileExistense(file);
+	private static void save(Groups groups, File file) throws IOException {
+		HandyFunctions.ensureFileExistense(file);
 		try (Writer writer = new FileWriter(file)) {
 			for (GroupData group : groups) {
 				writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
 			}
-		}
-	}
-	
-	private void ensureFileExistense(File file) throws IOException {
-		if (!file.exists()) {
-			file.createNewFile();
 		}
 	}
 	
