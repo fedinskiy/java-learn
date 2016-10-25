@@ -1,18 +1,14 @@
 package ru.stqa.pft.addressbook.appamanager;
 
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.Groups;
 
-import javax.security.auth.login.AppConfigurationEntry;
 import java.io.*;
-import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,42 +22,54 @@ public class ApplicationManager {
 	private Session session;
 	private String browser;
 	private AppConfiguration config;
-	private final String configPath="configuration/config.xml";
+	
 	public ApplicationManager(String browser) {
 		this.browser = browser;
 	}
-	 
-	public void init() {
 	
-		try{
+	public void init() {
+		try {
 			loadConfiguration();
-		}catch(Exception E){
-			throw new IllegalArgumentException("Не удалось получит файл конфигурации",E);
+		} catch (Exception E) {
+			throw new IllegalArgumentException("Не удалось получит файл конфигурации ", E);
 		}
 		if (browser.equals(BrowserType.FIREFOX)) {
 			wd = new FirefoxDriver();
-		}else if(BrowserType.CHROME.equals(browser)) {
+		} else if (BrowserType.CHROME.equals(browser)) {
 			wd = new ChromeDriver();
-		}else if(BrowserType.IE.equals(browser)) {
+		} else if (BrowserType.IE.equals(browser)) {
 			wd = new InternetExplorerDriver();
-		
+			
 		}
-
+		
 		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		wd.get(config.getEntryPoint());
 		groupHelper = new GroupHelper(wd);
 		contactHelper = new ContactHelper(wd);
 		appNavigation = new AppNavigation(wd);
-		session=new Session(wd);
-		getSession().login(config.getUsername(),config.getPassword());
+		session = new Session(wd);
+		getSession().login(config.getUsername(), config.getPassword());
 	}
 	
 	private void loadConfiguration() throws IOException {
-		File source = new File(configPath);
-		if (!source.exists()) {
-			throw new FileNotFoundException("Не найден файл " + source.getAbsolutePath());
+		String properties = System.getProperty("target", "local");
+		String configPath = String.format("configuration/%s.properties", properties);
+		File source;
+		try {
+			source = new File(configPath);
+		} catch (Exception e) {
+			throw new FileNotFoundException("Не найден файл " + configPath);
 		}
 		
+		if (null == source || !source.exists()) {
+			throw new FileNotFoundException("Не найден файл " + source.getAbsolutePath());
+		}
+		try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
+			this.config = new AppConfiguration(reader);
+			
+		}
+		/*
+
 		String xml = "";
 		XStream xstream = new XStream();
 		
@@ -75,6 +83,7 @@ public class ApplicationManager {
 			xstream.processAnnotations(AppConfiguration.class);
 			this.config = (AppConfiguration) xstream.fromXML(xml);
 		}
+		*/
 	}
 	
 	
@@ -100,9 +109,18 @@ public class ApplicationManager {
 	
 	@XStreamAlias("config")
 	private class AppConfiguration {
+		private final Properties properties;
 		private String username;
 		private String password;
 		private String entryPoint;
+		
+		public AppConfiguration(BufferedReader reader) throws IOException {
+			properties = new Properties();
+			properties.load(reader);
+			username = properties.getProperty("web.userName");
+			password = properties.getProperty("web.password");
+			entryPoint = properties.getProperty("web.entryPoint");
+		}
 		
 		public String getUsername() {
 			return username;
@@ -115,6 +133,6 @@ public class ApplicationManager {
 		public String getEntryPoint() {
 			return entryPoint;
 		}
-		 
+		
 	}
 }
