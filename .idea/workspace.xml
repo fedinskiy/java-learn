@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="beaea111-254e-4a4e-bcc2-46043bcb364c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addressbook-web-test/build.gradle" afterPath="$PROJECT_DIR$/addressbook-web-test/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/appamanager/ApplicationManager.java" afterPath="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/appamanager/ApplicationManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/tests/AddressBookTest.java" afterPath="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/tests/AddressBookTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="java-learn.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,11 +51,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ApplicationManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApplicationManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/appamanager/ApplicationManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="269">
               <caret line="62" column="8" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -842,7 +849,6 @@
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/model/ContactData.java" />
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/resources/contacts.json" />
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/generators/ContactDataGenerator.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/model/Groups.java" />
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/generators/GroupDataGenerator.java" />
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/appamanager/HandyFunctions.java" />
@@ -857,6 +863,7 @@
         <option value="$PROJECT_DIR$/addressbook-web-test/configuration/config.xml" />
         <option value="$PROJECT_DIR$/addressbook-web-test/configuration/local.properties" />
         <option value="$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/appamanager/ApplicationManager.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1654,13 +1661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/addressbook-web-test/src/test/java/ru/stqa/pft/addressbook/model/Groups.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1848,6 +1848,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="269">
           <caret line="62" column="8" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
           <folding />
         </state>
       </provider>
