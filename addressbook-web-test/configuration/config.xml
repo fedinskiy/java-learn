@@ -1,5 +1,0 @@
-<config>
-    <username>admin</username>
-    <password>secret</password>
-    <entryPoint>http://localhost/addressbook/index.php</entryPoint>
-</config>
