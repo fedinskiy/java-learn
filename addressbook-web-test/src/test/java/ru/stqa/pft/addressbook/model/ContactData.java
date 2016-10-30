@@ -1,7 +1,9 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -10,25 +12,27 @@ import java.util.stream.Collectors;
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.STRING_SEPARATOR;
 import static ru.stqa.pft.addressbook.appamanager.HandyFunctions.cleanPhone;
 
+@Entity
+@Table(name="addressbook")
 public class ContactData {
-	@Expose	private String firstName;
-	@Expose private String lastName;
-	@Expose private String address;
-	private String mobilePhone;
-	private String workPhone;
-	private String homePhone;
-	private String allPhones;
-	private String allEmails;
-	private String email;
-	private String email2;
-	private String email3;
-	private String fullInfo;
-	private ThreePartDate birth;
-	private ThreePartDate anniversary;
-	private String group;
-	private File photo;
-	private int id;
-	private final int DEFAULT_ID = Integer.MAX_VALUE;
+	@Expose	@Column(name="firstname") private String firstName;
+	@Expose @Column(name="lastname") private String lastName;
+	@Expose @Column @Type(type = "text") private String address;
+	@Transient private String mobilePhone;
+	@Transient private String workPhone;
+	@Transient private String homePhone;
+	@Transient private String allPhones;
+	@Transient private String allEmails;
+	@Transient private String email;
+	@Transient private String email2;
+	@Transient private String email3;
+	@Transient private String fullInfo;
+	@Transient private ThreePartDate birth;
+	@Transient private ThreePartDate anniversary;
+	@Transient private String group;
+	@Column(name="photo") @Type(type = "text") private String photo ;
+	@Id @Column(name="id") private int id;
+	@Transient private final int DEFAULT_ID = Integer.MAX_VALUE;
 
 	
 	
@@ -173,11 +177,11 @@ public class ContactData {
 	}
 	
 	public File getPhoto() {
-		return photo;
+		return new File(photo);
 	}
 	
 	public ContactData withPhoto(File photo) {
-		this.photo = photo;
+		this.photo = photo.getPath();
 		return this;
 	}
 	

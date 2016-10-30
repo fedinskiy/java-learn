@@ -3,30 +3,49 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @XStreamAlias("group")
+@Entity
+@Table(name="group_list")
 public class  GroupData {
 	@Expose
+	@Column(name="group_name")
+	
 	private String name;
 	@Expose
+	@Column(name="group_header")
+	@Type(type="text")
 	private String header;
 	@Expose
+	@Column(name="group_footer")
+	@Type(type="text")
 	private String footer;
 	
+
+	
+	@Id
+	@Column(name="group_id")
+	@Type(type="integer")
 	@XStreamOmitField
-	private String id=String.valueOf(Integer.MAX_VALUE);
+	private int id=Integer.MAX_VALUE;
 	
 	public GroupData(String name, String header, String footer) {
 		this.name = name;
 		this.header = header;
 		this.footer = footer;
-		id=String.valueOf(Integer.MAX_VALUE);
+		id=Integer.MAX_VALUE;
 	}
 	public GroupData() {
 		this.name = "";
 		this.header = "";
 		this.footer = "";
-		id=String.valueOf(Integer.MAX_VALUE);
+		id=Integer.MAX_VALUE;
 	}
 	
 	@Override
@@ -50,19 +69,23 @@ public class  GroupData {
 	}
 	
 	public String getId() {
-		return id;
+		return String.valueOf(id);
 	}
 	
 	public int getIdNumber() {
-		return Integer.parseInt(this.id);
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id =id;
 	}
 	
 	public GroupData withId(int id) {
-		this.id = String.valueOf(id);
+		this.id = id;
 		return this;
 	}
 	public GroupData withId(String id) {
-		this.id = id;
+		this.id = Integer.parseInt(id);
 		return this;
 	}
 	public GroupData withName(String name) {
@@ -79,7 +102,6 @@ public class  GroupData {
 		this.footer = footer;
 		return this;
 	}
-	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -87,18 +109,15 @@ public class  GroupData {
 		
 		GroupData groupData = (GroupData) o;
 		
-		if (!name.equals(groupData.name)) return false;
-		return id.equals(groupData.id);
+		if (id != groupData.id) return false;
+		return name.equals(groupData.name);
 		
 	}
 	
 	@Override
 	public int hashCode() {
 		int result = name.hashCode();
-		if(null==id){
-			id=String.valueOf(Integer.MAX_VALUE);
-		}
-		result = 31 * result + id.hashCode();
+		result = 31 * result + id;
 		return result;
 	}
 }
