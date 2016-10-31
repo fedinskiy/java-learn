@@ -3,15 +3,19 @@ package ru.stqa.pft.addressbook.tests;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.addressbook.appamanager.ApplicationManager;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 import ru.stqa.pft.addressbook.tests.groups.GroupCreationTests;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 /**
@@ -43,4 +47,13 @@ public class AddressBookTest {
 		app.stop();
 	}
 	
+	public void verifyGroupListinUI() {
+		if(app.configuration().isUseUIChecks()){
+			Groups fromDB = app.db().groups();
+			Groups fromGUI = app.groups().getSet();
+			Assert.assertEquals(fromGUI,fromDB.stream()
+					.map((g)->new GroupData().withId(g.getId()).withName(g.getName())).collect(Collectors.toSet()));
+		}
+		
+	}
 }

@@ -108,6 +108,10 @@ public class ApplicationManager {
 		return appNavigation;
 	}
 	
+	public AppConfiguration configuration() {
+		return config;
+	}
+	
 	public Session getSession() {
 		return session;
 	}
@@ -117,11 +121,12 @@ public class ApplicationManager {
 	}
 	
 	@XStreamAlias("config")
-	private class AppConfiguration {
+	public class AppConfiguration {
 		private final Properties properties;
 		private String username;
 		private String password;
 		private String entryPoint;
+		private boolean useUIChecks;
 		
 		public AppConfiguration(BufferedReader reader) throws IOException {
 			properties = new Properties();
@@ -129,6 +134,7 @@ public class ApplicationManager {
 			username = properties.getProperty("web.userName");
 			password = properties.getProperty("web.password");
 			entryPoint = properties.getProperty("web.entryPoint");
+			useUIChecks = Boolean.getBoolean("verifyUI");
 		}
 		
 		public String getUsername() {
@@ -144,5 +150,8 @@ public class ApplicationManager {
 		}
 		
 		
+		public boolean isUseUIChecks() {
+			return useUIChecks;
+		}
 	}
 }
