@@ -22,6 +22,7 @@ public class ApplicationManager {
 	private Session session;
 	private String browser;
 	private AppConfiguration config;
+	private DbHelper dbHelper;
 	
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -33,6 +34,7 @@ public class ApplicationManager {
 		} catch (Exception E) {
 			throw new IllegalArgumentException("Не удалось получит файл конфигурации ", E);
 		}
+		dbHelper = new DbHelper();
 		if (browser.equals(BrowserType.FIREFOX)) {
 			wd = new FirefoxDriver();
 		} else if (BrowserType.CHROME.equals(browser)) {
@@ -46,9 +48,12 @@ public class ApplicationManager {
 		wd.get(config.getEntryPoint());
 		groupHelper = new GroupHelper(wd);
 		contactHelper = new ContactHelper(wd);
+		
 		appNavigation = new AppNavigation(wd);
 		session = new Session(wd);
 		getSession().login(config.getUsername(), config.getPassword());
+		
+		
 	}
 	
 	private void loadConfiguration() throws IOException {
@@ -107,6 +112,10 @@ public class ApplicationManager {
 		return session;
 	}
 	
+	public DbHelper db() {
+		return dbHelper;
+	}
+	
 	@XStreamAlias("config")
 	private class AppConfiguration {
 		private final Properties properties;
@@ -133,6 +142,7 @@ public class ApplicationManager {
 		public String getEntryPoint() {
 			return entryPoint;
 		}
+		
 		
 	}
 }

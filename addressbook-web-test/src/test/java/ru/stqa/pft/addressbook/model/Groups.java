@@ -1,15 +1,9 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
-import com.google.common.collect.ImmutableList;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -25,9 +19,8 @@ public class Groups extends ForwardingSet<GroupData> {
 	public Groups(Set<GroupData> groupSet) {
 		this.delegate=new HashSet<GroupData>(groupSet);
 	}
-	public Groups(List<GroupData> groupList) {
-		this.delegate=new HashSet<GroupData>();
-		this.delegate.addAll(groupList);
+	public Groups(Collection<GroupData> groupList) {
+		this.delegate=new HashSet<GroupData>(groupList);
 	}
 	
 	public Groups() {
