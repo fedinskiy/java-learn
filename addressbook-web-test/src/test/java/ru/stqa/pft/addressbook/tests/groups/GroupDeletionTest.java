@@ -17,26 +17,17 @@ import static org.testng.Assert.assertEquals;
  */
 public class GroupDeletionTest extends AddressBookTest {
 	
-	@BeforeMethod
-	public void ensurePreconditions(){
-		app.moveTo().groupsPage();
-		if (app.groups().getSet().size()==0) {
-			app.groups().create(new GroupData().withId("TestGroupName"));
-		}
-	}
-	
 	@Test
 	public void deleteGroup()
 	{
-		ensurePreconditions();
-		Groups before = app.groups().getSet();
+		Groups before = app.db().groups();
 		GroupData toDelete=before.iterator().next();
-		
+		app.moveTo().groupsPage();
 		app.groups().delete(toDelete);
+		Groups after = app.db().groups();
+		assertEquals(after.getCount(),before.getCount()-1);
 		
-		assertEquals(app.groups().getCount(),before.size()-1);
-		
-		Groups after = app.groups().getSet();
+	
 		assertThat(after,equalTo(before.without(toDelete)));
 	}
 	

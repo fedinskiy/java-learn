@@ -14,13 +14,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Created by owlowl on 23.09.16.
  */
 public class GroupModificationTest extends AddressBookTest {
-	@BeforeMethod
-	public void ensurePreconditions() {
-		if (app.db().groups().size() == 0) {
-			app.moveTo().groupsPage();
-			app.groups().create(new GroupData().withId("TestGroupName"));
-		}
-	}
 	
 	@Test
 	public void testGroupModification() {
@@ -33,8 +26,9 @@ public class GroupModificationTest extends AddressBookTest {
 		app.groups().modify(newVersion);
 		app.groups().returnToGroupPage();
 		
-		Assert.assertEquals(before.size(), app.groups().getCount());
 		Groups after = app.db().groups();
+		Assert.assertEquals(before.size(), after.getCount());
+		
 		assertThat(after, equalTo(before.without(oldVersion).withAdded(newVersion)));
 		verifyGroupListinUI();
 	}

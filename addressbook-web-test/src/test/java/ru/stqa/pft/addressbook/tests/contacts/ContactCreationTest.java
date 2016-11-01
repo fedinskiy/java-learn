@@ -43,15 +43,18 @@ public class ContactCreationTest extends AddressBookTest {
 	
 	@Test(dataProvider = "loadContacts")
 	public void testContactCreation(ContactData newContact) {
+		Groups groups = app.db().groups();
+		newContact=newContact.inGroup(groups.iterator().next());
+		
 		app.moveTo().contactsPage();
-		Contacts before = app.contacts().getSet();
+		Contacts before = app.db().contacts();
 		app.contacts().create(newContact);
 		app.moveTo().contactsPage();
-		
-		Assert.assertEquals(before.size() + 1, app.contacts().getCount());
-		
-		Contacts after = app.contacts().getSet();
-		Assert.assertEquals(after, before.withAdded(newContact.withId(after.stream().max(app.contacts().getComparator()).get().getId())));
+		Contacts after = app.db().contacts();
+		Assert.assertEquals(before.size() + 1, after.getCount());
+				
+		assertThat(after,
+				equalTo(before.withAdded(newContact.withId(after.stream().max(app.contacts().getComparator()).get().getId()))));
 	}
 	
 	@Test(enabled = false)

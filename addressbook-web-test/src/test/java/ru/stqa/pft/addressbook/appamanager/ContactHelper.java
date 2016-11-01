@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.*;
@@ -50,7 +51,10 @@ public class ContactHelper extends BaseHelper {
 		}
 		//selectContactGroup(2);
 		if (creation) {
-			selectContactGroup(contactData.getGroup());
+			if (contactData.getGroups().size()>0) {
+				Assert.assertTrue(contactData.getGroups().size()==1);
+				selectContactGroup(contactData.getGroups().iterator().next());
+			}
 		}
 	}
 	
@@ -58,9 +62,9 @@ public class ContactHelper extends BaseHelper {
 		HandyFunctions.chooseInSelector(5, groupNumber, wd);
 	}
 	
-	private void selectContactGroup(String groupName) {
-		if(!(null==groupName||groupName.isEmpty())) {
-			HandyFunctions.chooseInSelector(wd, "new_group", groupName);
+	private void selectContactGroup(GroupData group) {
+		if(!(null==group)) {
+			HandyFunctions.chooseInSelector(wd, "new_group", group.getName());
 		}
 	}
 	
@@ -156,7 +160,7 @@ public class ContactHelper extends BaseHelper {
 			String id =we.findElement(By.className("center")).findElement(By.name("selected[]")).getAttribute("id");
 			Assert.assertNotNull(id);
 			Assert.assertNotEquals(id,"","Пустое поле id");
-			ContactData contact= new ContactData(name,lastName, null,null,null,null,null,null);
+			ContactData contact= new ContactData(name,lastName, null,null,null,null,null);
 			contact.withId(id);
 			contacts.add(contact);
 		}

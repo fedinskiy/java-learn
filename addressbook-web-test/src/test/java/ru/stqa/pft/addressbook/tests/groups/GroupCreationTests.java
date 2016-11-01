@@ -1,8 +1,6 @@
 package ru.stqa.pft.addressbook.tests.groups;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -21,7 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends AddressBookTest {
 	
-
 	
 	@DataProvider
 	public Iterator<Object[]> validGroups() {
@@ -46,20 +43,19 @@ public class GroupCreationTests extends AddressBookTest {
 	@Test(dataProvider = "validGroups")
 	public void testGroupCreation(GroupData newGroup) {
 		app.moveTo().groupsPage();
-		Groups before = app.groups().getSet();
+		Groups before = app.db().groups();
 		
 		app.groups().create(newGroup);
 		app.moveTo().groupsPage();
-		assertThat(app.groups().getCount(), equalTo(before.size() + 1));
-		
-		Groups after = app.groups().getSet();
+		Groups after = app.db().groups();
+		assertThat(after.getCount(), equalTo(before.size() + 1));
 		
 		newGroup.withId(after.stream().max(app.groups().getComparator()).get().getIdNumber());
 		ToIntFunction<? super GroupData> toInt = (g) -> g.getIdNumber();
 		
 		assertThat(after, equalTo(
 				before.withAdded(newGroup.withId(after.stream().mapToInt(toInt).max().getAsInt()))));
-
+		
 	}
 	
 	@Test(enabled = false)

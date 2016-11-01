@@ -19,12 +19,5 @@ public class ContactAddressTest extends AddressBookTest {
 		Assert.assertEquals(fromPage.getId(),fromTable.getId());
 		Assert.assertEquals(fromPage.getAddress(),fromTable.getAddress());
 	}
-	@BeforeMethod
-	public void ensurePreconditions() {
-		app.moveTo().contactsPage();
-		if (app.contacts().getSet().size() == 0) {
-			app.contacts().create(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001", "TestGroupName"));
-			app.moveTo().contactsPage();
-		}
-	}
+	
 }

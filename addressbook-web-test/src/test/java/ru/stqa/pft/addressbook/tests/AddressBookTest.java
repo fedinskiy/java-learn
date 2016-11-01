@@ -9,6 +9,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.addressbook.appamanager.ApplicationManager;
+import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 import ru.stqa.pft.addressbook.tests.groups.GroupCreationTests;
@@ -31,10 +32,28 @@ public class AddressBookTest {
 		app.init();
 	}
 	
-	@BeforeMethod
+	@BeforeMethod()
 	public void logTestStart(Method method, Object[] p) {
 		logger.info("Start test " + method.getName());
 		logger.debug("test parametrs are " + Arrays.asList(p));
+	}
+	
+	@BeforeMethod(dependsOnMethods = "logTestStart")
+	public void ensureGroupPreconditions() {
+		if (app.db().groups().size() == 0) {
+			app.moveTo().groupsPage();
+			app.groups().create(new GroupData().withId("TestGroupName"));
+		}
+	}
+	@BeforeMethod(dependsOnMethods = "logTestStart")
+	public void ensureContactPreconditions() {
+			app.moveTo().contactsPage();
+		if (app.contacts().getSet().size() == 0) {
+			app.contacts().create(new ContactData().withFirstName("FirstNameForTest").withLastName("LastNameForTest")
+					.withAddress("addr").withMobilePhone("mobilephone").withEmail("email").withBirth("15.12.1992")
+					.withAnniversary("17.09.2001"));//, "TestGroupName"));
+			app.moveTo().contactsPage();
+		}
 	}
 	
 	@AfterMethod(alwaysRun = true)

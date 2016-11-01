@@ -14,25 +14,17 @@ public class ContactDeletionTest extends AddressBookTest {
 	
 	@Test
 	public void deleteContactFromTable() {
-		ensurePreconditions();
-		Contacts before = app.contacts().getSet();
+		Contacts before =app.db().contacts();
 		ContactData toDelete = before.iterator().next();
 		
-		app.contacts().delete(toDelete);
 		app.moveTo().contactsPage();
-		
-		Assert.assertEquals(app.contacts().getCount(), before.size() - 1);
-		Contacts after = app.contacts().getSet();
+		app.contacts().delete(toDelete);
+		app.moveTo().contactsPage(); //обновляет список
+		Contacts after = app.db().contacts();
+		Assert.assertEquals(after.getCount(), before.size() - 1);
+	
 		
 		Assert.assertEquals(after, before.without(toDelete));
 	}
 	
-	@BeforeMethod
-	public void ensurePreconditions() {
-		app.moveTo().contactsPage();
-		if (app.contacts().getSet().size() == 0) {
-			app.contacts().create(new ContactData("FirstNameForTest", "LastNameForTest", "addr", "mobilephone", "email", "15.12.1992", "17.09.2001", "TestGroupName"));
-			app.moveTo().contactsPage();
-		}
-	}
 }

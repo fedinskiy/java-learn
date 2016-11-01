@@ -37,6 +37,9 @@ public class Groups extends ForwardingSet<GroupData> {
 		retval.addAll(delegate);
 		return retval;
 	}
+	public int getCount(){
+		return this.size();
+	}
 	
 	public Groups withAdded(GroupData group){
 		Groups groups = new Groups(this);

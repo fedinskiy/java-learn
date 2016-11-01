@@ -44,4 +44,7 @@ public class Contacts extends ForwardingSet<ContactData> {
 		retval.addAll(delegate);
 		return retval;
 	}
+	public int getCount(){
+		return this.size();
+	}
 }
