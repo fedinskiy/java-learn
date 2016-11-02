@@ -5,7 +5,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 import ru.stqa.pft.addressbook.tests.AddressBookTest;
 
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.ToIntFunction;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,9 +50,10 @@ public class ContactCreationTest extends AddressBookTest {
 		app.moveTo().contactsPage();
 		Contacts after = app.db().contacts();
 		Assert.assertEquals(before.size() + 1, after.getCount());
-				
+		before =	before.withAdded(newContact.withId(after.stream().max(app.contacts().getComparator()).get().getId()));
+		Assert.assertEquals(after, before);
 		assertThat(after,
-				equalTo(before.withAdded(newContact.withId(after.stream().max(app.contacts().getComparator()).get().getId()))));
+				equalTo(before));
 	}
 	
 	@Test(enabled = false)

@@ -27,6 +27,7 @@ public class ContactData {
 	@Column
 	@Type(type = "text")
 	private String address;
+	
 	@Transient
 	private String mobilePhone;
 	@Transient
@@ -98,7 +99,7 @@ public class ContactData {
 	}
 	
 	public String getAddress() {
-		return address;
+		return address.replace("\r\n","\n");
 	}
 	
 	
@@ -320,25 +321,26 @@ public class ContactData {
 	
 	@Override
 	public boolean equals(Object o) {
-		boolean result;
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		
 		ContactData that = (ContactData) o;
 		
-		if (id != that.id && id != DEFAULT_ID && that.id != DEFAULT_ID) return false;
-		if (!firstName.equals(that.firstName)) return false;
-		if (!lastName.equals(that.lastName)) return false;
-		result = address.equals(that.address);
-		return result;
+		if (getId() != that.getId()&& getId() != DEFAULT_ID && that.getId() != DEFAULT_ID) return false;
+		if (getFirstName() != null ? !getFirstName().equals(that.getFirstName()) : that.getFirstName() != null)
+			return false;
+		if (getLastName() != null ? !getLastName().equals(that.getLastName()) : that.getLastName() != null)
+			return false;
+		return getAddress() != null ? getAddress().equals(that.getAddress()) : that.getAddress() == null;
 		
 	}
 	
 	@Override
 	public int hashCode() {
-		int result = firstName.hashCode();
-		result = 31 * result + lastName.hashCode();
-		result = 31 * result + address.hashCode();
+		int result = getFirstName() != null ? getFirstName().hashCode() : 0;
+		result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+		result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
+		result = 31 * result + getId();
 		return result;
 	}
 	
@@ -349,7 +351,7 @@ public class ContactData {
 				", lastName='" + lastName + '\'' +
 				", address='" + address + '\'' +
 				", id=" + id +
-				'}';
+				"}, ("+this.hashCode()+") Ge\n";
 	}
 	
 	
