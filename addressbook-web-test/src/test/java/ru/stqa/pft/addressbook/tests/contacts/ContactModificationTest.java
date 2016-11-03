@@ -21,10 +21,10 @@ public class ContactModificationTest extends AddressBookTest {
 		
 		app.contacts().modify(modified);
 		app.moveTo().contactsPage();
-		
-		Assert.assertEquals(app.contacts().getCount(), before.size());
-		
 		Contacts after = app.db().contacts();
+		Assert.assertEquals(after.getCount(), before.size());
+		
+		
 		Assert.assertEquals(after, before.without(toModify).withAdded(modified));
 	}
 

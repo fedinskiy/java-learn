@@ -354,6 +354,11 @@ public class ContactData {
 				"}, ("+this.hashCode()+") Ge\n";
 	}
 	
+	public ContactData withoutGroup(GroupData toDelete) {
+		this.groups.remove(toDelete);
+		return this;
+	}
+	
 	
 	public class ThreePartDate {
 		private int day;

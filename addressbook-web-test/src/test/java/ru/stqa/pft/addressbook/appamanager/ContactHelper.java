@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
+import org.testng.asserts.Assertion;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -196,6 +197,15 @@ public class ContactHelper extends BaseHelper {
 	private void showContactDetailsById(int id) {
 		wd.findElement(By.xpath("//a[contains(@href,'view.php?id="+id+"')]")).click();
 	}
+	private void chooseContact(int id){
+		wd.findElement(By.xpath("//input[@id="+id+"]")).click();
+	}
+	private void chooseGroupForContact(String id) {
+		String expression = ".//*[@id='content']/form[2]/div[4]/select[@name='to_group']//option[@value=" + id + "]";
+		if (!wd.findElement(By.xpath(expression)).isSelected()) {
+			wd.findElement(By.xpath(expression)).click();
+		}
+	}
 	
 	private void editContactById(int id) {
 		wd.findElement(By.xpath("//a[contains(@href,'edit.php?id="+id+"')]")).click();
@@ -210,6 +220,7 @@ public class ContactHelper extends BaseHelper {
 		wd.navigate().back();
 		return retval;
 	}
+	
 	
 	public Contacts loadFromDefaultJSON() throws IOException {
 		File source = new File("src/test/resources/contacts.json");
@@ -232,6 +243,31 @@ public class ContactHelper extends BaseHelper {
 			}
 			contacts = gson.fromJson(json, Contacts.class);
 			return contacts;
+		}
+	}
+	
+	public void setGroup(ContactData toModify, GroupData toAdd) {
+		chooseContact(toModify.getId());
+		chooseGroupForContact(toAdd.getId());
+		addContactsToGroup();
+	}
+	
+	private void addContactsToGroup() {
+		pressButtonByXPath(".//*[@id='content']/form[2]/div[4]/input[@name='add']");
+	}
+	
+	public void deleteGroup(ContactData toModify, GroupData toDelete) {
+		System.out.println("contact: "+toModify);
+		System.out.println("group: "+toDelete);
+		chooseGroupInSelector(toDelete.getId());
+		chooseContact(toModify.getId());
+		pressButton("remove");
+	}
+	
+	private void chooseGroupInSelector(String id) {
+		String expression = ".//*[@id='right']/select[@name='group']//option[@value=" + id + "]";
+		if (!wd.findElement(By.xpath(expression)).isSelected()) {
+			wd.findElement(By.xpath(expression)).click();
 		}
 	}
 }

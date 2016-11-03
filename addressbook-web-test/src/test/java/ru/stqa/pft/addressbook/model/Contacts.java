@@ -47,4 +47,13 @@ public class Contacts extends ForwardingSet<ContactData> {
 	public int getCount(){
 		return this.size();
 	}
+	
+	public ContactData getbyID(final int id) {
+		for (ContactData contact:this.delegate){
+			if(contact.getId()==id){
+				return contact;
+			}
+		}
+		return null;
+	}
 }
