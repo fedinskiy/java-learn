@@ -1,0 +1,5 @@
+<config>
+    <username>administrator</username>
+    <password>secret</password>
+    <entryPoint>http://localhost/mantisbt-1.3.3/</entryPoint>
+</config>
