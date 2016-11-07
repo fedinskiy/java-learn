@@ -11,18 +11,21 @@ import java.io.File;
  * Created by owlowl on 23.09.16.
  */
 public class BaseHelper {
-	protected final RemoteWebDriver wd;
+	protected final ApplicationManager app;
 	
-	public BaseHelper(RemoteWebDriver wd) {
-		this.wd = wd;
+	public BaseHelper(ApplicationManager app) {
+		this.app = app;
 	}
-	
+	private RemoteWebDriver wd(){
+		return app.getDriver();
+	}
+		
 	public void pressButtonByXPath(String xpath) {
-		wd.findElement(By.xpath(xpath)).click();
+		wd().findElement(By.xpath(xpath)).click();
 	}
 	
 	public void pressButton(String name) {
-		wd.findElement(By.name(name)).click();
+		wd().findElement(By.name(name)).click();
 	}
 	
 	public void selectElement() {
@@ -30,14 +33,28 @@ public class BaseHelper {
 	}
 	
 	public void selectElement(int i) {
-		WebElement selector = wd.findElements(By.name("selected[]")).get(i);
+		WebElement selector = wd().findElements(By.name("selected[]")).get(i);
 		if (!selector.isSelected()) {
 			selector.click();
 		}
 	}
 	
+	public void setFieldValue(String fieldName, String newValue) {
+		setFieldValue(newValue, By.name(fieldName));
+	}
+	public void setFieldValue(String newValue, By locator) {
+		wd().findElement(locator).click();
+		if (!(null == newValue||newValue.isEmpty())) {
+			String curText = wd().findElement(locator).getAttribute("value");
+			if (!curText.equals(newValue)) {
+				wd().findElement(locator).clear();
+				wd().findElement(locator).sendKeys(newValue);
+			}
+		}
+	}
+	
 	public void acceptDialog() {
-		wd.switchTo().alert().accept();
+		wd().switchTo().alert().accept();
 	}
 	
 	public String getFieldValue(String fieldName) {
@@ -47,7 +64,7 @@ public class BaseHelper {
 	public String getFieldValue(By locator) {
 		WebElement contentHolder;
 		String curText;
-		contentHolder = wd.findElement(locator);
+		contentHolder = wd().findElement(locator);
 		Assert.assertNotNull(contentHolder);
 		if ("textarea" == contentHolder.getTagName()) {
 			curText = contentHolder.getText();
@@ -63,7 +80,7 @@ public class BaseHelper {
 	
 	public void putFile(By locator, File filepath) {
 		if (null != filepath && filepath.isFile()) {
-			wd.findElement(locator).sendKeys(filepath.getAbsolutePath());
+			wd().findElement(locator).sendKeys(filepath.getAbsolutePath());
 		}
 	}
 	

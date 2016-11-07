@@ -21,6 +21,7 @@ public class ApplicationManager {
 	private AppConfiguration config;
 	private RegistrationHelper regHelper;
 	private FTPHelper ftp;
+	private MailHelper mail;
 	
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -82,8 +83,14 @@ public class ApplicationManager {
 		return ftp;
 		
 	}
+	public MailHelper mail() {
+		if (null == mail) {
+			mail = new MailHelper(this);
+		}
+		return mail;
+	}
 	
-	public WebDriver getDriver() {
+	public RemoteWebDriver getDriver() {
 		if (null == wd) {
 			if (browser.equals(BrowserType.FIREFOX)) {
 				wd = new FirefoxDriver();
