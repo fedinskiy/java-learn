@@ -1,7 +1,6 @@
 package ru.stqa.pft.mantis.tests.appmanager;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -22,6 +21,7 @@ public class ApplicationManager {
 	private RegistrationHelper regHelper;
 	private FTPHelper ftp;
 	private MailHelper mail;
+	private JamesHelper james;
 	
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -65,8 +65,8 @@ public class ApplicationManager {
 		return config;
 	}
 	
-	public Session newSession() {
-		return new Session(this);
+	public HttpSession newSession() {
+		return new HttpSession(this);
 	}
 	
 	public RegistrationHelper registration() {
@@ -90,6 +90,13 @@ public class ApplicationManager {
 		return mail;
 	}
 	
+	public JamesHelper james() {
+		if (null == james) {
+			james = new JamesHelper(this);
+		}
+		return james;
+	}
+	
 	public RemoteWebDriver getDriver() {
 		if (null == wd) {
 			if (browser.equals(BrowserType.FIREFOX)) {
@@ -107,6 +114,8 @@ public class ApplicationManager {
 		return wd;
 	}
 	
+
+	
 	
 	@XStreamAlias("config")
 	public class AppConfiguration {
@@ -118,13 +127,7 @@ public class ApplicationManager {
 		private LoginData ftpData;
 		private String FTPHost;
 		
-		public LoginData FTP() {
-			return ftpData;
-		}
-		
-		public LoginData Web() {
-			return webData;
-		}
+		private RemoteData mailServer;
 		
 		private LoginData webData;
 		private boolean useUIChecks;
@@ -139,7 +142,9 @@ public class ApplicationManager {
 			FTPHost = properties.getProperty("ftp.host");
 			webData = new LoginData("web");
 			ftpData = new LoginData("ftp");
+			mailServer=new RemoteData("mailserver");
 			useUIChecks = Boolean.getBoolean("verifyUI");
+			
 		}
 		
 		public String getUsername() {
@@ -162,12 +167,24 @@ public class ApplicationManager {
 			return baseUrl + signPage;
 		}
 		
+		public String getFTPHost() {
+			return FTPHost;
+		}
+		
+		public LoginData FTP() {
+			return ftpData;
+		}
+		
+		public LoginData Web() {
+			return webData;
+		}
+		
 		public boolean isUseUIChecks() {
 			return useUIChecks;
 		}
 		
-		public String getFTPHost() {
-			return FTPHost;
+		public RemoteData mailServer() {
+			return mailServer;
 		}
 		
 		public class LoginData {
@@ -192,6 +209,28 @@ public class ApplicationManager {
 				return password;
 			}
 		}
-		
+		public class RemoteData {
+			private LoginData admin;
+			private String host;
+			private int port;
+			
+			public RemoteData(String propertiesPrefix) {
+				host = properties.getProperty(propertiesPrefix + ".host");
+				port = Integer.parseInt(properties.getProperty(propertiesPrefix + ".port"));
+				admin=new LoginData(propertiesPrefix);
+			}
+			
+			public String host() {
+				return host;
+			}
+			
+			public int port() {
+				return port;
+			}
+			
+			public LoginData admin() {
+				return admin;
+			}
+		}
 	}
 }
