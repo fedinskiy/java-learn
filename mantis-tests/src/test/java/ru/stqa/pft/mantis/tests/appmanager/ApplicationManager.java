@@ -22,6 +22,7 @@ public class ApplicationManager {
 	private FTPHelper ftp;
 	private MailHelper mail;
 	private JamesHelper james;
+	private NavigationHelper navigation;
 	
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -97,6 +98,13 @@ public class ApplicationManager {
 		return james;
 	}
 	
+	public NavigationHelper navigateTo() {
+		if (null == navigation) {
+			navigation = new NavigationHelper(this);
+		}
+		return navigation;
+	}
+	
 	public RemoteWebDriver getDriver() {
 		if (null == wd) {
 			if (browser.equals(BrowserType.FIREFOX)) {
@@ -155,6 +163,9 @@ public class ApplicationManager {
 			return webData.getPassword();
 		}
 		
+		public String getBase() {
+			return baseUrl;
+		}
 		public String getMainPage() {
 			return baseUrl + startPage;
 		}

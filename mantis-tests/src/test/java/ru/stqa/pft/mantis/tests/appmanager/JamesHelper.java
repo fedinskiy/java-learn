@@ -28,6 +28,7 @@ public class JamesHelper {
 		this.app = app;
 		telnet = new TelnetClient();
 		mailSession = Session.getDefaultInstance(System.getProperties());
+		mailServer = app.configuration().mailServer().host();
 	}
 	
 	public boolean doesUserExists(String name) {
@@ -58,7 +59,6 @@ public class JamesHelper {
 	}
 	
 	private void initTelnetSession() {
-		mailServer = app.configuration().mailServer().host();
 		String username = app.configuration().mailServer().admin().getUsername();
 		String password = app.configuration().mailServer().admin().getPassword();
 		try {

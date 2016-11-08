@@ -18,7 +18,9 @@ public class RegistrationTest extends MantisTest{
 	}
 	@Test
 	public void testRegistration() throws IOException, MessagingException {
-		long now=System.currentTimeMillis();
+		app.getDriver().get(app.configuration().getEntryPoint());
+		
+		long now=12;//System.currentTimeMillis();
 		String email = "user"+now+"@localhost";
 		String userName = "user"+now;
 		String password = "password";
