@@ -1,10 +1,12 @@
 package ru.stqa.pft.mantis.tests.tests;
 
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.tests.appmanager.ApplicationManager;
+import ru.stqa.pft.mantis.tests.model.Issue;
 
 
 import java.io.File;
@@ -29,7 +31,18 @@ public class MantisTest {
 	public void logTestStart(Method method, Object[] p) {
 	
 	}
-
+	public void skipIfNotFixed(int issueId) {
+		if (isIssueOpen(issueId)) {
+			throw new SkipException("Ignored because of issue " + issueId);
+		}
+	}
+	
+	private boolean isIssueOpen(int issueId) {
+		Issue issue = app.soap().getIssue(issueId);
+		if (null==issue) return false;
+		return (issue.isOpen());
+	}
+	
 	@AfterSuite(alwaysRun = true)
 	public void tearDown() throws IOException {
 		app.ftp().restore("config/config_inc.php.bak","config/config_inc.php");

@@ -23,7 +23,7 @@ public class ApplicationManager {
 	private MailHelper mail;
 	private JamesHelper james;
 	private NavigationHelper navigation;
-	
+	private SoapHelper soapHelper;
 	public ApplicationManager(String browser) {
 		this.browser = browser;
 	}
@@ -105,6 +105,13 @@ public class ApplicationManager {
 		return navigation;
 	}
 	
+	public SoapHelper soap() {
+		if (null == soapHelper) {
+			soapHelper = new SoapHelper(this);
+		}
+		return soapHelper;
+	}
+	
 	public RemoteWebDriver getDriver() {
 		if (null == wd) {
 			if (browser.equals(BrowserType.FIREFOX)) {
@@ -172,6 +179,9 @@ public class ApplicationManager {
 		
 		public String getEntryPoint() {
 			return baseUrl + loginPage;
+		}
+		public String getSoapPage() {
+			return baseUrl + properties.getProperty("web.soapConnectPage");
 		}
 		
 		public String getSignPage() {
