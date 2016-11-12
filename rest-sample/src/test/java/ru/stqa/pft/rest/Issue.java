@@ -8,6 +8,7 @@ public class Issue {
 	private int id;
 	private String description ;
 	private String subject;
+	private String state;
 		
 	public Issue withId(int newId) {
 		this.id=newId;
@@ -62,5 +63,10 @@ public class Issue {
 		result = 31 * result + getDescription().hashCode();
 		result = 31 * result + getSubject().hashCode();
 		return result;
+	}
+	
+	public boolean isOpen() {
+		final String STATE_OPEN="0";
+		return (STATE_OPEN.equals(this.state));
 	}
 }
