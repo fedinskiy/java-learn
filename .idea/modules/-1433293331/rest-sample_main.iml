@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="rest-sample:main" external.linked.project.path="$MODULE_DIR$/../../rest-sample" external.root.project.path="$MODULE_DIR$/../../rest-sample" external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="rest-sample:main" external.linked.project.path="/media/60841ED2841EAA94/f/coding/shared/java-learn/rest-sample" external.root.project.path="$MODULE_DIR$/../../../rest-sample" external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/../../rest-sample/build/classes/main" />
+    <output url="file:///media/60841ED2841EAA94/f/coding/shared/java-learn/rest-sample/build/classes/main" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../rest-sample/src/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../rest-sample/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../rest-sample/src/main/resources" type="java-resource" />
+    <content url="file:///media/60841ED2841EAA94/f/coding/shared/java-learn/rest-sample/src/main">
+      <sourceFolder url="file:///media/60841ED2841EAA94/f/coding/shared/java-learn/rest-sample/src/main/java" isTestSource="false" />
+      <sourceFolder url="file:///media/60841ED2841EAA94/f/coding/shared/java-learn/rest-sample/src/main/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

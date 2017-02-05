@@ -9,16 +9,16 @@
         <option name="gradleHome" value="$PROJECT_DIR$/../../gradle-3.0" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/addressbook-web-test" />
+            <option value="/media/60841ED2841EAA94/f/coding/shared/java-learn/addressbook-web-test" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="createEmptyContentRootDirectories" value="true" />
-        <option name="disableWrapperSourceDistributionNotification" value="true" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/github-sample" />
+        <option name="gradleHome" value="/usr/share/gradle" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
@@ -28,24 +28,22 @@
         <option name="useAutoImport" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/mantis-tests" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/mantis-tests" />
+            <option value="/media/60841ED2841EAA94/f/coding/shared/java-learn/mantis-tests" />
           </set>
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="createEmptyContentRootDirectories" value="true" />
-        <option name="disableWrapperSourceDistributionNotification" value="true" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/rest-sample" />
-        <option name="gradleJvm" value="1.8" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/rest-sample" />
+            <option value="/media/60841ED2841EAA94/f/coding/shared/java-learn/rest-sample" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -55,7 +53,7 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$/sbox" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/sbox" />
+            <option value="/media/60841ED2841EAA94/f/coding/shared/java-learn/sbox" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
@@ -68,7 +66,7 @@
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/soap-sample" />
+            <option value="/media/60841ED2841EAA94/f/coding/shared/java-learn/soap-sample" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
